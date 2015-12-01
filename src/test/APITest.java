@@ -9,7 +9,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
-import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.apache.commons.io.IOUtils;
 
 public class APITest {
 
@@ -19,7 +19,7 @@ public class APITest {
 		String charset = "UTF-8";
 		String title = "Game of Thrones";
 		String season = "5";
-		String episode = "5";
+		String episode = "6";
 		
 		String query = String.format("t=%s&season=%s&episode=%s",
 				URLEncoder.encode(title, charset),
@@ -31,7 +31,8 @@ public class APITest {
 		InputStream response = connection.getInputStream();
 
 		//read the inputstream
-		String theString = IOUtils.toString(response, "UTF-8");
+		String theString = IOUtils.toString(response, charset);
+		System.out.println(theString);
 	}
 	
 	public static void main(String[] args) throws MalformedURLException, IOException
