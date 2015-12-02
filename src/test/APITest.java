@@ -21,16 +21,15 @@ public class APITest {
 		//String season = "5";
 		//String episode = "6";
 		
-		String query = String.format("t=%s",
+		
+		String query = String.format("t=%s&r=json",
 				URLEncoder.encode(title, charset));
 		
 		URLConnection connection = new URL(url + "?" + query).openConnection();
 		connection.setRequestProperty("Accept-Charset", charset);
 		InputStream response = connection.getInputStream();
-		
 
 		//read the inputstream
-		//!!!! LOOK INTO JSON!!!!!
 		String theString = IOUtils.toString(response, charset);
 		System.out.println(theString);
 	}
