@@ -17,20 +17,20 @@ public class APITest {
 	{
 		String url = "http://www.omdbapi.com/";
 		String charset = "UTF-8";
-		String title = "Game of Thrones";
-		String season = "5";
-		String episode = "6";
+		String title = "Top Gun";
+		//String season = "5";
+		//String episode = "6";
 		
-		String query = String.format("t=%s&season=%s&episode=%s",
-				URLEncoder.encode(title, charset),
-				URLEncoder.encode(season, charset),
-				URLEncoder.encode(episode, charset));
+		String query = String.format("t=%s",
+				URLEncoder.encode(title, charset));
 		
 		URLConnection connection = new URL(url + "?" + query).openConnection();
 		connection.setRequestProperty("Accept-Charset", charset);
 		InputStream response = connection.getInputStream();
+		
 
 		//read the inputstream
+		//!!!! LOOK INTO JSON!!!!!
 		String theString = IOUtils.toString(response, charset);
 		System.out.println(theString);
 	}
