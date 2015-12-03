@@ -14,7 +14,7 @@ public class JacksonTester {
 	
 	public static void omdbTest() throws JsonParseException, MalformedURLException, IOException
 	{
-		String url = "http://www.omdbapi.com/?t=Gladiator&y=&plot=short&r=json";
+		String url = "http://www.omdbapi.com/?t=101+Dalmatians&y=&plot=short&r=json";
 	
 		JsonFactory factory = new JsonFactory();
 		JsonParser parser = factory.createParser(new URL(url));
@@ -39,7 +39,7 @@ public class JacksonTester {
 			
 			// Gets Rating
 			if (JsonToken.FIELD_NAME.equals(token) &&
-					"Rated".equals(parser.getCurrentName()))
+					"Plot".equals(parser.getCurrentName()))
 			{
 				token = parser.nextToken();
 				System.out.println(parser.getText());
