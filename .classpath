@@ -5,5 +5,8 @@
 	<classpathentry kind="lib" path="C:/Users/Nathanial/Desktop/Jars/commons-io-2.4-bin/commons-io-2.4/commons-io-2.4.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Nathanial/Desktop/Jars/jackson-core-2.6.3.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Nathanial/Desktop/Jars/sqlite-jdbc-3.8.11.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Nathanial/Desktop/Jars/weblaf-demo-1.29.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Nathanial/Desktop/Jars/jgoodies-looks-2_5_3/jgoodies-looks-2.5.3/jgoodies-looks-2.5.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Nathanial/Desktop/Jars/JTattoo-1.6.11.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
