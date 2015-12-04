@@ -20,34 +20,53 @@ import com.alee.laf.menu.WebMenuBar;
 
 public class WindowTest extends JFrame{
 	
+	protected int windowSizeX;
+	protected int windowSizeY;
+	
+	protected String title;
+	
+	//Everything goes into this
+	protected JFrame mainFrame;
+	
+	//Default constructor
+	public WindowTest()
+	{
+		this.windowSizeX = 500;
+		this.windowSizeY = 500;
+		
+		this.title = "Movie DB";
+		mainFrame = new JFrame(this.title);
+	}
+	
+	//Override constructor
+	public WindowTest(int windowSizeX, int windowSizeY, String title)
+	{
+		this.windowSizeX = windowSizeX;
+		this.windowSizeY = windowSizeY;
+		
+		this.title = title;
+		mainFrame = new JFrame(this.title);
+	}
+	
+	public void init() throws IOException
+	{
+		buildWindow();
+	}
+	
 	public void buildWindow() throws IOException
 	{
-		//this will be scrollable
-		JPanel panel = new JPanel();
-		
-		//everything goes into this
-		JFrame mainFrame = new JFrame("Movie DB");
-		
-		
 		//????????MENU BAR??????
 		//Menu bar
-		JMenuBar menuBar = new JMenuBar();
 		
-		//Menu itesm
-		JMenu menu = new JMenu("Movies");
-		menu.setMnemonic(KeyEvent.VK_M);
-		menu.getAccessibleContext().setAccessibleDescription(
-				"Movies! Click this for more options");
-		//add to the Menubar
-		menuBar.add(menu);
+		ArrayList<OptionMenuBar> listOfMenuItems = new ArrayList<OptionMenuBar>();
+
+		listOfMenuItems.add(new OptionMenuBar("Movies", "SubMovie", "Youclicked SubMovies 1"));
+		listOfMenuItems.get(0).add("sub movie2", "You clicked submovies 2");
+		listOfMenuItems.get(0).add("sub movies 3", "and so on");
+		listOfMenuItems.add(new OptionMenuBar("People"));
+		listOfMenuItems.get(1).add("sub people 1", "You clicked sub people");
 		
-		//MenuItem
-		JMenuItem menuItem = new 
-				JMenuItem("subMovie", KeyEvent.VK_T);
-		menu.add(menuItem);
-		
-		//add to frame
-		mainFrame.setJMenuBar(menuBar);
+		mainFrame.setJMenuBar( new MenuBar(listOfMenuItems).giveMeTheMenuBar());
 		//!!!!!! END MENUBAR
 		
 		
@@ -80,9 +99,13 @@ public class WindowTest extends JFrame{
 		
 		
 		//Clicking ability
-		picLabel.addMouseListener(new MouseAdapter(){
+		
+		//can store into an array !!!
+		MouseAdapter mouseAction = new MouseAdapter() {
 			public void mouseClicked(MouseEvent me) {
-				System.out.println("CLICKED");}});
+				System.out.println("CLICKED");}};
+		
+		picLabel.addMouseListener(mouseAction);
 		
 		
 		
@@ -98,10 +121,17 @@ public class WindowTest extends JFrame{
 		mainFrame.setVisible(true);
 	}
 	
+	//Menubar with 3d array
+	public void buildWindowBar(String [][][] menuOptions)
+	{
+		
+	}
+	
+	
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException
 	{
 		UIManager.setLookAndFeel("com.jtattoo.plaf.mint.MintLookAndFeel");
 		WindowTest test = new WindowTest();
-		test.buildWindow();
+		test.init();
 	}
 }
