@@ -1,4 +1,4 @@
-package test;
+package menubar;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,15 +10,13 @@ public class SubOptionMenuBar {
 	private String subOptionName;
 	private JMenuItem subOption;
 
-	//constructor
-	public SubOptionMenuBar(String subOptionName, String testOutput)
+	public SubOptionMenuBar(String subOptionName, int whatToDoOption)
 	{
 		this.subOptionName = subOptionName;
 		this.subOption = new JMenuItem(this.subOptionName);
-		whatToDo(subOption, testOutput);
+		whatToDo(this.subOption, whatToDoOption);
 	}
 	
-	//returns the JMenuItem
 	public JMenuItem giveMeMySon()
 	{
 		return subOption;
@@ -27,16 +25,22 @@ public class SubOptionMenuBar {
 	//tells what to do with event
 	//first parameter is for menuOption, second is what object
 	//to call, is optional.
-	private void whatToDo(JMenuItem subMenuOption, Object... whatToDo)
+	public void whatToDo(JMenuItem subMenuOption, int whatToDo)
 	{
 		subMenuOption.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent event)
 			{
 				//This is where stuff happens
-				System.out.println(whatToDo[0]);
+				actionToRun(whatToDo);
 			}
 		});
+	}
+	
+	//logic for whatToDo
+	private void actionToRun(int selector)
+	{
+		//Fill in later
 	}
 	
 }

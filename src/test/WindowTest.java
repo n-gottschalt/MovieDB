@@ -17,6 +17,9 @@ import java.awt.event.*;
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.menu.WebMenuBar;
 
+import menubar.MenuBar;
+import menubar.OptionMenuBar;
+
 
 public class WindowTest extends JFrame{
 	
@@ -60,11 +63,11 @@ public class WindowTest extends JFrame{
 		
 		ArrayList<OptionMenuBar> listOfMenuItems = new ArrayList<OptionMenuBar>();
 
-		listOfMenuItems.add(new OptionMenuBar("Movies", "SubMovie", "Youclicked SubMovies 1"));
-		listOfMenuItems.get(0).add("sub movie2", "You clicked submovies 2");
-		listOfMenuItems.get(0).add("sub movies 3", "and so on");
+		listOfMenuItems.add(new OptionMenuBar("Movies", "SubMovie", 1));
+		listOfMenuItems.get(0).add("sub movie2", 1);
+		listOfMenuItems.get(0).add("sub movies 3", 1);
 		listOfMenuItems.add(new OptionMenuBar("People"));
-		listOfMenuItems.get(1).add("sub people 1", "You clicked sub people");
+		listOfMenuItems.get(1).add("sub people 1", 1);
 		
 		mainFrame.setJMenuBar( new MenuBar(listOfMenuItems).giveMeTheMenuBar());
 		//!!!!!! END MENUBAR

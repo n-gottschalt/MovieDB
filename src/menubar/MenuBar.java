@@ -1,4 +1,4 @@
-package test;
+package menubar;
 
 import java.util.ArrayList;
 
@@ -8,14 +8,12 @@ public class MenuBar {
 
 	private JMenuBar menuBar;
 	
-	//default constructor
 	public MenuBar()
 	{
 		menuBar = new JMenuBar();
 		
 	}
 	
-	//Overridden constructor
 	public MenuBar(ArrayList<OptionMenuBar> subMenuAttributes)
 	{
 		menuBar = new JMenuBar();
@@ -25,7 +23,6 @@ public class MenuBar {
 		}
 	}
 	
-	//Simple add
 	public void add(OptionMenuBar itemToAdd)
 	{
 		menuBar.add(itemToAdd.giveMeMySonsDad());

@@ -1,4 +1,4 @@
-package test;
+package menubar;
 
 import javax.swing.JMenu;
 
@@ -15,17 +15,17 @@ public class OptionMenuBar {
 	
 	//Overloaded
 	public OptionMenuBar(String menuOptionTitle, String subMenuOptionTitle,
-			String testOutput)
+			int actionToRun)
 	{
 		menuOption = new JMenu(menuOptionTitle);
-		subOption = new SubOptionMenuBar(subMenuOptionTitle, testOutput);
+		subOption = new SubOptionMenuBar(subMenuOptionTitle, actionToRun);
 		menuOption.add(subOption.giveMeMySon());
 	}
 	
 	//add new SubOption
-	public void add(String subMenuOptionTitle, String testOutput)
+	public void add(String subMenuOptionTitle, int actionToRun)
 	{
-		subOption = new SubOptionMenuBar(subMenuOptionTitle, testOutput);
+		subOption = new SubOptionMenuBar(subMenuOptionTitle, actionToRun);
 		menuOption.add(subOption.giveMeMySon());
 	}
 
