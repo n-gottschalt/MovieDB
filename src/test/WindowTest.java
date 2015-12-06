@@ -39,6 +39,12 @@ public class WindowTest extends JFrame{
 		
 		this.title = "Movie DB";
 		mainFrame = new JFrame(this.title);
+		try {
+			init();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	//Override constructor
@@ -60,7 +66,7 @@ public class WindowTest extends JFrame{
 	{
 		//????????MENU BAR??????
 		//Menu bar
-		
+		/*
 		ArrayList<OptionMenuBar> listOfMenuItems = new ArrayList<OptionMenuBar>();
 
 		listOfMenuItems.add(new OptionMenuBar("Movies", "SubMovie", 1));
@@ -70,6 +76,7 @@ public class WindowTest extends JFrame{
 		listOfMenuItems.get(1).add("sub people 1", 1);
 		
 		mainFrame.setJMenuBar( new MenuBar(listOfMenuItems).giveMeTheMenuBar());
+		*/
 		//!!!!!! END MENUBAR
 		
 		
