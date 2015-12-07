@@ -131,13 +131,6 @@ public class WindowTest extends JFrame{
 		mainFrame.setVisible(true);
 	}
 	
-	//Menubar with 3d array
-	public void buildWindowBar(String [][][] menuOptions)
-	{
-		
-	}
-	
-	
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException
 	{
 		UIManager.setLookAndFeel("com.jtattoo.plaf.mint.MintLookAndFeel");

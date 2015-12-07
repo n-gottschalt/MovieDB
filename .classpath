@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="C:/Users/Nathanial/Desktop/Jars/weblaf-demo-1.29.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Nathanial/Desktop/Jars/jgoodies-looks-2_5_3/jgoodies-looks-2.5.3/jgoodies-looks-2.5.3.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Nathanial/Desktop/Jars/JTattoo-1.6.11.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

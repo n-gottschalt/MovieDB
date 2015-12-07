@@ -1,21 +1,13 @@
 package databaseJSON;
 
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.*;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import test.WindowBuilder;
+import test.MainWindow;
 
 public class Database {
 
@@ -56,19 +48,14 @@ public class Database {
 		return dataToReturn;
 	}
 	
+	public static LinkedHashMap<String, Object> getData(String valueToLookFor)
+	{
+		Result rs = connection().executeQuery()
+	}
 	public static void main(String[] args) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, IOException, UnsupportedLookAndFeelException
 	{
-		ArrayList<LinkedHashMap<String, Object>> test = getData();
-		
-		WindowBuilder newWindow = new WindowBuilder(400, 400, "TEST");
-		JPanel panel1 = new JPanel();
-		Image img = Toolkit.getDefaultToolkit().createImage((byte [])test.get(0).get("Art"));
-		ImageIcon icon = new ImageIcon(img);
-		JLabel lPhoto = new JLabel();
-		lPhoto.setIcon(icon);
-		panel1.add(lPhoto);
-		newWindow.mainFrame.add(panel1);
-		newWindow.make();
-			
+		MainWindow test = new MainWindow();
+		test.mainFrame.add(test.buildMoviePanel(getData()));
+		test.make();
 	}
 }

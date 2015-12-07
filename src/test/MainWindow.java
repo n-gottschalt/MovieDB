@@ -1,6 +1,9 @@
 package test;
 
+import java.awt.Dimension;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 import javax.swing.*;
 
@@ -24,22 +27,24 @@ public class MainWindow extends WindowBuilder{
 	
 	public void buildWindow() throws IOException
 	{
-		mainFrame.add(buildMoviePanel());
+	//	mainFrame.add(buildMoviePanel());
 		super.make();
 	}
 	
-	private JPanel buildMoviePanel() throws IOException
+	public JScrollPane buildMoviePanel(ArrayList<LinkedHashMap<String, Object>> movies) throws IOException
 	{
-		//Will need to call method in database class
-		//then parse the data for the movie picture and the title
-		//use for loop
-		JPanel test = new JPanel();
-		JPanel subPanel = new JPanel();
-		subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.PAGE_AXIS));
-	//	subPanel.add(super.pictureBuilder("C:\\Users\\Nathanial\\Desktop\\fileicon.png"));
-		subPanel.add(new JLabel("Movie Title"));
-		test.add(subPanel);
-		return test;
+		JPanel mainPanel = new JPanel();
+		JPanel subPanel;
+		for(LinkedHashMap<String, Object> i : movies)
+		{
+			subPanel = new JPanel();
+			subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.PAGE_AXIS));
+			subPanel.add(super.pictureBuilder((byte[])i.get("Art")));
+			subPanel.add(new JLabel((String)i.get("Title")));
+			mainPanel.add(subPanel);
+		}
+		JScrollPane scroll = new JScrollPane(mainPanel);
+		return scroll;
 	}
 
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, UnsupportedLookAndFeelException

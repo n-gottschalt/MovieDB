@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 
 import menubar.*;
@@ -46,8 +48,13 @@ public class WindowBuilder extends JFrame{
 	public JLabel pictureBuilder(String wherePictureLives) throws IOException
 	{
 		BufferedImage image = ImageIO.read(new File(wherePictureLives));
-		//Will need to eventually add the action listener class to this
-		return new JLabel(new ImageIcon(image));
+		return new JLabel(new ImageIcon(image.getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+	}
+	
+	public JLabel pictureBuilder(byte[] pictureFromDB)
+	{	
+		Image image = Toolkit.getDefaultToolkit().createImage(pictureFromDB);
+		return new JLabel(new ImageIcon(image.getScaledInstance(90, 120, Image.SCALE_SMOOTH)));
 	}
 	
 	public void make()
