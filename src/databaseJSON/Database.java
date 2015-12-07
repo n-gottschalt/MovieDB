@@ -21,37 +21,49 @@ public class Database {
 		return stmt;
 	}
 	
-	public static ArrayList<LinkedHashMap<String, Object>> getData() throws ClassNotFoundException, SQLException
+	private static ArrayList<LinkedHashMap<String, Object>> parseData(ResultSet rs) throws SQLException, ClassNotFoundException 
 	{
-		ResultSet rs = connection().executeQuery("SELECT * FROM movies");
-		
-		ArrayList<LinkedHashMap<String, Object>> dataToReturn = new ArrayList<LinkedHashMap<String, Object>>();
-		
+		ArrayList<LinkedHashMap<String, Object>> dataToParse = new ArrayList<LinkedHashMap<String, Object>>();
 		int i = 0;
 		while(rs.next())
 		{
-			dataToReturn.add(new LinkedHashMap<String, Object>());
-			dataToReturn.get(i).put("MovieID", rs.getInt("MovieID"));
-			dataToReturn.get(i).put("Title", rs.getString("Title"));
-			dataToReturn.get(i).put("Release", rs.getString("Release"));
-			dataToReturn.get(i).put("Review", rs.getLong("Review"));
-			dataToReturn.get(i).put("Director", rs.getString("Director"));
-			dataToReturn.get(i).put("Genre", rs.getString("Genre"));
-			dataToReturn.get(i).put("Runtime", rs.getString("Runtime"));
-			dataToReturn.get(i).put("Plot", rs.getString("Plot"));
-			dataToReturn.get(i).put("Art", rs.getBytes("Art"));
+			dataToParse.add(new LinkedHashMap<String, Object>());
+			dataToParse.get(i).put("MovieID", rs.getInt("MovieID"));
+			dataToParse.get(i).put("Title", rs.getString("Title"));
+			dataToParse.get(i).put("Release", rs.getString("Release"));
+			dataToParse.get(i).put("Review", rs.getLong("Review"));
+			dataToParse.get(i).put("Director", rs.getString("Director"));
+			dataToParse.get(i).put("Genre", rs.getString("Genre"));
+			dataToParse.get(i).put("Runtime", rs.getString("Runtime"));
+			dataToParse.get(i).put("Plot", rs.getString("Plot"));
+			dataToParse.get(i).put("Art", rs.getBytes("Art"));
 			i++;
 		}
 		rs.close();
 		connection().close();
 		c.close();
-		return dataToReturn;
+		return dataToParse;
 	}
 	
-	public static LinkedHashMap<String, Object> getData(String valueToLookFor)
+	public static ArrayList<LinkedHashMap<String, Object>> getData() 
+			throws ClassNotFoundException, SQLException
 	{
-		Result rs = connection().executeQuery()
+		ResultSet rs = connection().executeQuery("SELECT * FROM movies");
+		return parseData(rs);
 	}
+	
+	public static LinkedHashMap<String, Object> getData(String valueToLookFor,
+			String typeOfData) throws ClassNotFoundException, SQLException
+	{
+		ResultSet rs = connection().executeQuery("SELECT * FROM movies WHERE " + typeOfData + " = \"" + valueToLookFor +"\"");
+		return parseData(rs).get(0);
+	}
+	
+	public static boolean storeData(LinkedHashMap<String, Object> valuesToStore)
+	{
+		
+	}
+	
 	public static void main(String[] args) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, IOException, UnsupportedLookAndFeelException
 	{
 		MainWindow test = new MainWindow();

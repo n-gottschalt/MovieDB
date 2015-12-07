@@ -17,7 +17,7 @@ public class APITest {
 	{
 		String url = "http://www.omdbapi.com/";
 		String charset = "UTF-8";
-		String title = "Top Gun";
+		String title = "Jurassic Park";
 		//String season = "5";
 		//String episode = "6";
 		

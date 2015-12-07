@@ -2,28 +2,21 @@ package databaseJSON;
 
 import static org.junit.Assert.*;
 
+import java.sql.SQLException;
+
 import org.junit.Test;
 
 public class DatabaseTest {
 
 	@Test
-	public void testConnection() {
-		fail("Not yet implemented");
+	public void testGetData() throws ClassNotFoundException, SQLException {
+		
+		assertEquals("Test", Database.getData().get(1).get("Title"));
 	}
 
 	@Test
-	public void testGetData() {
-		fail("Not yet implemented");
+	public void testGetDataString() throws ClassNotFoundException, SQLException
+	{
+		assertEquals("Test", Database.getData("Test", "Title").get("Title"));
 	}
-
-	@Test
-	public void testGetDataString() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testMain() {
-		fail("Not yet implemented");
-	}
-
 }
