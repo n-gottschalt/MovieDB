@@ -25,7 +25,7 @@ public class MainWindow extends WindowBuilder{
 	public void buildWindow() throws IOException
 	{
 		mainFrame.add(buildMoviePanel());
-		mainFrame.setVisible(true);
+		super.make();
 	}
 	
 	private JPanel buildMoviePanel() throws IOException
@@ -36,7 +36,7 @@ public class MainWindow extends WindowBuilder{
 		JPanel test = new JPanel();
 		JPanel subPanel = new JPanel();
 		subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.PAGE_AXIS));
-		subPanel.add(super.pictureBuilder("C:\\Users\\Nathanial\\Desktop\\fileicon.png"));
+	//	subPanel.add(super.pictureBuilder("C:\\Users\\Nathanial\\Desktop\\fileicon.png"));
 		subPanel.add(new JLabel("Movie Title"));
 		test.add(subPanel);
 		return test;

@@ -18,7 +18,7 @@ public class WindowBuilder extends JFrame{
 	
 	protected String title;
 	
-	protected JFrame mainFrame;
+	public JFrame mainFrame;
 	
 	public WindowBuilder() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
 	{
@@ -43,14 +43,19 @@ public class WindowBuilder extends JFrame{
 		UIManager.setLookAndFeel("com.jtattoo.plaf.mint.MintLookAndFeel");
 	}
 
-	protected JLabel pictureBuilder(String wherePictureLives) throws IOException
+	public JLabel pictureBuilder(String wherePictureLives) throws IOException
 	{
 		BufferedImage image = ImageIO.read(new File(wherePictureLives));
 		//Will need to eventually add the action listener class to this
 		return new JLabel(new ImageIcon(image));
 	}
 	
-	protected JMenuBar menuBarBuilder(ArrayList<OptionMenuBar> menuItems)
+	public void make()
+	{
+		mainFrame.setVisible(true);
+	}
+	
+	public JMenuBar menuBarBuilder(ArrayList<OptionMenuBar> menuItems)
 	{
 		return new MenuBar(menuItems).giveMeTheMenuBar();
 	}
