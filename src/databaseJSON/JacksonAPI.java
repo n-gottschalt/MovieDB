@@ -11,7 +11,7 @@ import org.apache.http.util.*;
 
 public class JacksonAPI {
 	
-	private static String[] types = {"Title", "Released", "imdbRating", "Director", "Genre", "Runtime", "Plot"};
+	private static String[] types = {"Title", "Released", "imdbRating", "Director", "Genre", "Runtime", "Plot", "Poster"};
 
 	public static LinkedHashMap<String, Object> pullFromOMDB(String movieName) throws 
 	JsonParseException, MalformedURLException, IOException, ClassNotFoundException, InstantiationException, 
@@ -33,35 +33,33 @@ public class JacksonAPI {
 			if (token == null)
 				break;
 
-			for(int i = 0; i < 7; i++)
+			for(int i = 0; i < 8; i++)
 			{
 				if (JsonToken.FIELD_NAME.equals(token) &&
 						types[i].equals(parser.getCurrentName()))
 				{
 					token = parser.nextToken();
-					dataFromJSON.put(types[i], parser.getText());
+					if(types[i].equals("Poster"))
+						dataFromJSON.put("Art", addPictureToHash(new URL(parser.getText())));
+					else
+						dataFromJSON.put(types[i], parser.getText());
 				}
 			}
-			
-			if(JsonToken.FIELD_NAME.equals(token) &&
-					"Poster".equals(parser.getCurrentName()))
-			{
-				token = parser.nextToken();
-				URL picture = new URL(parser.getText());
-				URLConnection ucon = picture.openConnection();
-				
-				InputStream is = ucon.getInputStream();
-				BufferedInputStream bis = new BufferedInputStream(is);
-				
-				ByteArrayBuffer baf = new ByteArrayBuffer(500);
-				int current = 0;
-				while((current = bis.read()) != -1)
-					baf.append((byte) current);
-				dataFromJSON.put("Art", baf.toByteArray());
-				
-			} 
 		}
 		return dataFromJSON;
 	}
-		//data.saveData((byte[])test.get("Art"));
+	
+	private static byte[] addPictureToHash(URL picture) throws IOException
+	{
+		URLConnection ucon = picture.openConnection();
+		
+		InputStream is = ucon.getInputStream();
+		BufferedInputStream bis = new BufferedInputStream(is);
+		
+		ByteArrayBuffer baf = new ByteArrayBuffer(500);
+		int current = 0;
+		while((current = bis.read()) != -1)
+			baf.append((byte) current);
+		return baf.toByteArray();
+	}
 }

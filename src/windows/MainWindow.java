@@ -1,5 +1,6 @@
 package windows;
 
+import java.awt.GridLayout;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -45,12 +46,13 @@ public class MainWindow extends WindowBuilder{
 	private JScrollPane buildMoviePanel(ArrayList<LinkedHashMap<String, Object>> movies) throws IOException
 	{
 		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new GridLayout(0,6));
 		JPanel subPanel;
 		for(LinkedHashMap<String, Object> i : movies)
 		{
 			subPanel = new JPanel();
 			subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.PAGE_AXIS));
-			subPanel.add(super.pictureBuilder((byte[])i.get("Art"), 90, 160));
+			subPanel.add(super.pictureBuilder((byte[])i.get("Art"), 214, 317));
 			subPanel.add(new JLabel((String)i.get("Title")));
 			mainPanel.add(subPanel);
 		}
