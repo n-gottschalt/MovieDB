@@ -1,5 +1,9 @@
 package databaseJSON;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.*;
 
@@ -59,6 +63,23 @@ public class Database {
 		connection().execute(sql);
 		stmt.close();
 		c.close();	
+	}
+	
+	public void saveData(byte[] picture) throws ClassNotFoundException, SQLException
+	{	
+		Connection c;
+		Class.forName("org.sqlite.JDBC");
+		c = DriverManager.getConnection("jdbc:sqlite:test.db");
+		System.out.println("Opened Database Successfully");
+		
+		c.setAutoCommit(false);
+		String sql = "INSERT INTO Movies (Art) VALUES (?);";
+		PreparedStatement pstmt = c.prepareStatement(sql);
+		
+		pstmt.setBytes(1,picture);
+		pstmt.executeUpdate();
+		c.commit();
+		c.close();
 	}
 	
 	public static void main(String[] args) throws ClassNotFoundException, SQLException

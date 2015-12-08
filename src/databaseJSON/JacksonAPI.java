@@ -1,0 +1,67 @@
+package databaseJSON;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.*;
+import java.util.LinkedHashMap;
+
+import com.fasterxml.jackson.core.*;
+import org.apache.http.util.*;
+
+public class JacksonAPI {
+	
+	private static String[] types = {"Title", "Released", "imdbRating", "Director", "Genre", "Runtime", "Plot"};
+
+	public static LinkedHashMap<String, Object> pullFromOMDB(String movieName) throws 
+	JsonParseException, MalformedURLException, IOException, ClassNotFoundException, InstantiationException, 
+	IllegalAccessException
+	{
+		LinkedHashMap<String, Object> dataFromJSON = new LinkedHashMap<String, Object>();
+		
+		//Used to get the JSON from OMDb
+		String query = String.format("t=%s&r=json", URLEncoder.encode(movieName, "UTF-8"));
+		String url = "http://www.omdbapi.com/?" + query;
+	
+		JsonFactory factory = new JsonFactory();
+		JsonParser parser = factory.createParser(new URL(url));
+		
+		while(!parser.isClosed())
+		{
+			JsonToken token = parser.nextToken();
+			
+			if (token == null)
+				break;
+
+			for(int i = 0; i < 7; i++)
+			{
+				if (JsonToken.FIELD_NAME.equals(token) &&
+						types[i].equals(parser.getCurrentName()))
+				{
+					token = parser.nextToken();
+					dataFromJSON.put(types[i], parser.getText());
+				}
+			}
+			
+			if(JsonToken.FIELD_NAME.equals(token) &&
+					"Poster".equals(parser.getCurrentName()))
+			{
+				token = parser.nextToken();
+				URL picture = new URL(parser.getText());
+				URLConnection ucon = picture.openConnection();
+				
+				InputStream is = ucon.getInputStream();
+				BufferedInputStream bis = new BufferedInputStream(is);
+				
+				ByteArrayBuffer baf = new ByteArrayBuffer(500);
+				int current = 0;
+				while((current = bis.read()) != -1)
+					baf.append((byte) current);
+				dataFromJSON.put("Art", baf.toByteArray());
+				
+			} 
+		}
+		return dataFromJSON;
+	}
+		//data.saveData((byte[])test.get("Art"));
+}
