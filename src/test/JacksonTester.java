@@ -1,20 +1,35 @@
 package test;
 
+import java.awt.Image;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 
+import windows.WindowBuilder;
+
 
 public class JacksonTester {
 	
-	public static void omdbTest() throws JsonParseException, MalformedURLException, IOException
+	public static void omdbTest(String movieName) throws JsonParseException, MalformedURLException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
 	{
-		String url = "http://www.omdbapi.com/?t=101+Dalmatians&y=&plot=short&r=json";
+		
+		
+		String charset = "UTF-8";
+		String title = movieName;
+		String query = String.format("t=%s&r=json", URLEncoder.encode(movieName, charset));
+		String url = "http://www.omdbapi.com/?" + query;
 	
 		JsonFactory factory = new JsonFactory();
 		JsonParser parser = factory.createParser(new URL(url));
@@ -44,6 +59,18 @@ public class JacksonTester {
 				token = parser.nextToken();
 				System.out.println(parser.getText());
 			}
+			
+			if(JsonToken.FIELD_NAME.equals(token) &&
+					"Poster".equals(parser.getCurrentName()))
+			{
+				token = parser.nextToken();
+				Image image = null;
+				URL picture = new URL(parser.getText());
+				image = ImageIO.read(picture);
+				WindowBuilder test = new WindowBuilder();
+				test.getFrame().add(new JLabel(new ImageIcon(image)));
+				test.make();
+			}
 		}
 	
 	}
@@ -52,9 +79,10 @@ public class JacksonTester {
 	
 	
 	
-	public static void main(String[] args) throws JsonParseException, MalformedURLException, IOException
+	public static void main(String[] args) throws JsonParseException, MalformedURLException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
 	{
-		omdbTest();
+		omdbTest("Top Gun");
+
 	}
 }
 		/*

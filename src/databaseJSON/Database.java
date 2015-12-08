@@ -1,19 +1,13 @@
 package databaseJSON;
 
-import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
-import javax.swing.JPanel;
-import javax.swing.UnsupportedLookAndFeelException;
-
-import test.MainWindow;
-
 public class Database {
 
-	private static Statement stmt;
-	private static Connection c;
-	public static Statement connection() throws ClassNotFoundException, SQLException
+	private Statement stmt;
+	private Connection c;
+	private Statement connection() throws ClassNotFoundException, SQLException
 	{
 		Class.forName("org.sqlite.JDBC");
 		c = DriverManager.getConnection("jdbc:sqlite:test.db");
@@ -21,7 +15,7 @@ public class Database {
 		return stmt;
 	}
 	
-	private static ArrayList<LinkedHashMap<String, Object>> parseData(ResultSet rs) throws SQLException, ClassNotFoundException 
+	private ArrayList<LinkedHashMap<String, Object>> parseData(ResultSet rs) throws SQLException, ClassNotFoundException 
 	{
 		ArrayList<LinkedHashMap<String, Object>> dataToParse = new ArrayList<LinkedHashMap<String, Object>>();
 		int i = 0;
@@ -45,29 +39,31 @@ public class Database {
 		return dataToParse;
 	}
 	
-	public static ArrayList<LinkedHashMap<String, Object>> getData() 
+	public ArrayList<LinkedHashMap<String, Object>> getData() 
 			throws ClassNotFoundException, SQLException
 	{
 		ResultSet rs = connection().executeQuery("SELECT * FROM movies");
 		return parseData(rs);
 	}
 	
-	public static LinkedHashMap<String, Object> getData(String valueToLookFor,
+	public LinkedHashMap<String, Object> getData(String valueToLookFor,
 			String typeOfData) throws ClassNotFoundException, SQLException
 	{
 		ResultSet rs = connection().executeQuery("SELECT * FROM movies WHERE " + typeOfData + " = \"" + valueToLookFor +"\"");
 		return parseData(rs).get(0);
 	}
 	
-	public static boolean storeData(LinkedHashMap<String, Object> valuesToStore)
-	{
-		
+	public void saveData(String title) throws ClassNotFoundException, SQLException
+	{	
+		String sql = "INSERT INTO Movies (Title) VALUES(\"" + title + "\")";
+		connection().execute(sql);
+		stmt.close();
+		c.close();	
 	}
 	
-	public static void main(String[] args) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, IOException, UnsupportedLookAndFeelException
+	public static void main(String[] args) throws ClassNotFoundException, SQLException
 	{
-		MainWindow test = new MainWindow();
-		test.mainFrame.add(test.buildMoviePanel(getData()));
-		test.make();
+		Database test = new Database();
+		test.saveData("Poland");
 	}
 }

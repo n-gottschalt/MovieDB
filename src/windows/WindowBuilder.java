@@ -1,4 +1,4 @@
-package test;
+package windows;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class WindowBuilder extends JFrame{
 	
 	protected String title;
 	
-	public JFrame mainFrame;
+	protected JFrame mainFrame;
 	
 	public WindowBuilder() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
 	{
@@ -31,10 +31,10 @@ public class WindowBuilder extends JFrame{
 		mainFrame = new JFrame(this.title);
 		mainFrame.setSize(this.windowSizeX, this.windowSizeY);
 		UIManager.setLookAndFeel("com.jtattoo.plaf.mint.MintLookAndFeel");
+		menuBarBuilder();
 	}
 	
-	//Override constructor
-	public WindowBuilder(int windowSizeX, int windowSizeY, String title) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
+	protected WindowBuilder(int windowSizeX, int windowSizeY, String title) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
 	{
 		this.windowSizeX = windowSizeX;
 		this.windowSizeY = windowSizeY;
@@ -45,16 +45,16 @@ public class WindowBuilder extends JFrame{
 		UIManager.setLookAndFeel("com.jtattoo.plaf.mint.MintLookAndFeel");
 	}
 
-	public JLabel pictureBuilder(String wherePictureLives) throws IOException
+	protected JLabel pictureBuilder(String wherePictureLives, int width, int height) throws IOException
 	{
 		BufferedImage image = ImageIO.read(new File(wherePictureLives));
-		return new JLabel(new ImageIcon(image.getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+		return new JLabel(new ImageIcon(image.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
 	}
 	
-	public JLabel pictureBuilder(byte[] pictureFromDB)
+	protected JLabel pictureBuilder(byte[] pictureFromDB, int width, int height)
 	{	
 		Image image = Toolkit.getDefaultToolkit().createImage(pictureFromDB);
-		return new JLabel(new ImageIcon(image.getScaledInstance(90, 120, Image.SCALE_SMOOTH)));
+		return new JLabel(new ImageIcon(image.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
 	}
 	
 	public void make()
@@ -62,7 +62,7 @@ public class WindowBuilder extends JFrame{
 		mainFrame.setVisible(true);
 	}
 	
-	public JMenuBar menuBarBuilder(ArrayList<OptionMenuBar> menuItems)
+	protected JMenuBar menuBarBuilder(ArrayList<OptionMenuBar> menuItems)
 	{
 		return new MenuBar(menuItems).giveMeTheMenuBar();
 	}
@@ -70,5 +70,9 @@ public class WindowBuilder extends JFrame{
 	protected JMenuBar menuBarBuilder()
 	{
 		return new MenuBar().giveMeTheMenuBar();
+	}
+	public JFrame getFrame()
+	{
+		return mainFrame;
 	}
 }
