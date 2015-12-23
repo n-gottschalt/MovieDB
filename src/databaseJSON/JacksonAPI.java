@@ -19,7 +19,6 @@ public class JacksonAPI {
 	{
 		LinkedHashMap<String, Object> dataFromJSON = new LinkedHashMap<String, Object>();
 		
-		//Used to get the JSON from OMDb
 		String query = String.format("t=%s&r=json", URLEncoder.encode(movieName, "UTF-8"));
 		String url = "http://www.omdbapi.com/?" + query;
 	

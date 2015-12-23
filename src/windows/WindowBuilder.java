@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
@@ -42,6 +43,14 @@ public class WindowBuilder extends JFrame{
 		this.title = title;
 		mainFrame = new JFrame(this.title);
 		mainFrame.setSize(this.windowSizeX, this.windowSizeY);
+		UIManager.setLookAndFeel("com.jtattoo.plaf.mint.MintLookAndFeel");
+	}
+	
+	protected WindowBuilder(Dimension size, String title) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
+	{
+		this.title = title;
+		mainFrame = new JFrame(this.title);
+		mainFrame.setSize(size);
 		UIManager.setLookAndFeel("com.jtattoo.plaf.mint.MintLookAndFeel");
 	}
 

@@ -1,6 +1,8 @@
 package windows;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,15 +17,15 @@ public class MainWindow extends WindowBuilder{
 
 	private static final long serialVersionUID = 1L;
 
-	public MainWindow() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
+	public MainWindow() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, SQLException
 	{
-		super(300, 300, "Main Window");
+		super(screenSize(), "Main Window");
+		buildWindow();
 	}
-	
-	public MainWindow(ArrayList<LinkedHashMap<String, Object>> movies) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
+
+	public static Dimension screenSize()
 	{
-		super(400, 400, "Main Window");
-		
+		return Toolkit.getDefaultToolkit().getScreenSize();
 	}
 	
 	public void buildWindow() throws IOException, ClassNotFoundException, SQLException
@@ -59,11 +61,9 @@ public class MainWindow extends WindowBuilder{
 		JScrollPane scroll = new JScrollPane(mainPanel);
 		return scroll;
 	}
-
+	
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, UnsupportedLookAndFeelException, SQLException
 	{
-		MainWindow test = new MainWindow();
-		test.buildWindow();
+		new MainWindow();
 	}
-
 }

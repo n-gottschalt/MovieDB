@@ -1,18 +1,13 @@
 package databaseJSON;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.sql.*;
 import java.text.ParseException;
 import java.util.*;
-
-import com.fasterxml.jackson.core.JsonParseException;
 
 import tools.DateConversion;
 
 public class Database {
 
-	private static String[] types = {"Title", "Released", "imdbRating", "Director", "Genre", "Runtime", "Plot", "Poster"};
 	private Statement stmt;
 	private Connection c;
 	private Statement connection() throws ClassNotFoundException, SQLException
@@ -69,15 +64,6 @@ public class Database {
 		return parseData(rs).get(0);
 	}
 	
-	public void saveData(String title) throws ClassNotFoundException, SQLException
-	{	
-		String sql = "INSERT INTO Movies (Title) VALUES(\"" + title + "\")";
-		connection().execute(sql);
-		stmt.close();
-		c.close();	
-	}
-	
-	
 	public void saveData(LinkedHashMap<String, Object> dataToSave) throws ClassNotFoundException, SQLException, ParseException
 	{
 		PreparedStatement pstmt = connectionP("INSERT INTO MOVIES (Title, Release, Review, Director"
@@ -107,11 +93,5 @@ public class Database {
 		pstmt.executeUpdate();
 		c.commit();
 		c.close();
-	}
-	
-	public static void main(String[] args) throws ClassNotFoundException, SQLException, JsonParseException, MalformedURLException, InstantiationException, IllegalAccessException, IOException, ParseException
-	{
-		Database test = new Database();
-		test.saveData(new JacksonAPI().pullFromOMDB("Cobra"));
 	}
 }
