@@ -1,7 +1,6 @@
 package menubar;
 
 import java.util.ArrayList;
-
 import javax.swing.JMenuBar;
 
 public class MenuBar {

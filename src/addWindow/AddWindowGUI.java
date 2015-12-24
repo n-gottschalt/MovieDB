@@ -50,7 +50,7 @@ public class AddWindowGUI extends WindowBuilder {
 	{
 		ArrayList<OptionMenuBar> menuItems = new ArrayList<>();
 		menuItems.add(new OptionMenuBar("Search"));
-		menuItems.get(0).add("Search", 1);
+		menuItems.get(0).add("Search", x -> new AddWindowGUI());
 		super.getFrame().setJMenuBar(menuBarBuilder(menuItems));
 	}
 

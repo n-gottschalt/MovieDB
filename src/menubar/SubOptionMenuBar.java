@@ -1,16 +1,17 @@
 package menubar;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JMenuItem;
+import java.awt.event.*;
+import java.io.IOException;
+import java.sql.SQLException;
+import javax.swing.*;
+import tools.LambdaFunction;
 
 public class SubOptionMenuBar {
 
 	private String subOptionName;
 	private JMenuItem subOption;
 
-	public SubOptionMenuBar(String subOptionName, int whatToDoOption)
+	public SubOptionMenuBar(String subOptionName, LambdaFunction whatToDoOption)
 	{
 		this.subOptionName = subOptionName;
 		this.subOption = new JMenuItem(this.subOptionName);
@@ -22,25 +23,19 @@ public class SubOptionMenuBar {
 		return subOption;
 	}
 	
-	//tells what to do with event
-	//first parameter is for menuOption, second is what object
-	//to call, is optional.
-	public void whatToDo(JMenuItem subMenuOption, int whatToDo)
+	private void whatToDo(JMenuItem subMenuOption, LambdaFunction action)
 	{
 		subMenuOption.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent event)
 			{
-				//This is where stuff happens
-				actionToRun(whatToDo);
+				try {
+					action.run(new Object());
+				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IOException
+						| UnsupportedLookAndFeelException | SQLException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 	}
-	
-	//logic for whatToDo
-	private void actionToRun(int selector)
-	{
-		//Fill in later
-	}
-	
 }

@@ -1,35 +1,32 @@
 package menubar;
 
-import javax.swing.JMenu;
+import javax.swing.JMenu; 
+import tools.LambdaFunction;
 
 public class OptionMenuBar {
 
 	private JMenu menuOption;
 	private SubOptionMenuBar subOption;
 	
-	//Default constructor
 	public OptionMenuBar(String menuOptionTitle)
 	{
 		menuOption = new JMenu(menuOptionTitle);
 	}
-	
-	//Overloaded
+
 	public OptionMenuBar(String menuOptionTitle, String subMenuOptionTitle,
-			int actionToRun)
+			LambdaFunction actionToRun)
 	{
 		menuOption = new JMenu(menuOptionTitle);
 		subOption = new SubOptionMenuBar(subMenuOptionTitle, actionToRun);
 		menuOption.add(subOption.giveMeMySon());
 	}
 	
-	//add new SubOption
-	public void add(String subMenuOptionTitle, int actionToRun)
+	public void add(String subMenuOptionTitle, LambdaFunction actionToRun)
 	{
 		subOption = new SubOptionMenuBar(subMenuOptionTitle, actionToRun);
 		menuOption.add(subOption.giveMeMySon());
 	}
 
-	//returns JMenu
 	public JMenu giveMeMySonsDad()
 	{
 		return menuOption;

@@ -6,11 +6,12 @@ import java.sql.SQLException;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import addWindow.AddWindowGUI;
+import tools.LambdaFunction;
 import windows.MainWindow;
 
 public class LambdaTest {
 	
-	public LambdaTest(Lambda action) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, UnsupportedLookAndFeelException, SQLException
+	public LambdaTest(LambdaFunction action) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, UnsupportedLookAndFeelException, SQLException
 	{
 		action.run(new Object());
 	}
