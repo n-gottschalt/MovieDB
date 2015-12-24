@@ -12,9 +12,8 @@ import windows.WindowBuilder;
 
 public class SearchMovieGUI extends WindowBuilder{
 
-	AddWindowGUI adder = new AddWindowGUI();
 	LinkedHashMap<String, Object> test;
-	public SearchMovieGUI() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException,
+	public SearchMovieGUI(AddWindowTools tool) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException,
 			UnsupportedLookAndFeelException {
 		super(400, 200, "Search");
 		JPanel mainPanel = new JPanel();
@@ -25,9 +24,8 @@ public class SearchMovieGUI extends WindowBuilder{
 			public void actionPerformed(ActionEvent e)
 			{
 				try {
-					adder.insertInputFieldData(JacksonAPI.pullFromOMDB(field.getText()));
+					tool.insertInputFieldData(JacksonAPI.pullFromOMDB(field.getText()));
 				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -36,10 +34,5 @@ public class SearchMovieGUI extends WindowBuilder{
 		mainPanel.add(button);
 		super.getFrame().add(mainPanel);
 		super.make();
-	}
-	
-	public static void main(String args[]) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, UnsupportedLookAndFeelException
-	{
-		new SearchMovieGUI();
 	}
 }

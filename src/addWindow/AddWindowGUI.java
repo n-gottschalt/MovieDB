@@ -28,39 +28,34 @@ import windows.WindowBuilder;
 
 public class AddWindowGUI extends WindowBuilder {
 
-	AddWindowTools tools = new AddWindowTools();
-	public AddWindowGUI() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, UnsupportedLookAndFeelException
+	AddWindowTools tools;
+	public AddWindowGUI(AddWindowTools tools) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, UnsupportedLookAndFeelException
 	{
 		super(500, 500, "Add Window");
+		this.tools = tools;
 		addInputFields();
 		addToMenu();
 		buildTextBox();
+		System.out.println(tools.getClass());
 	}
 	
 	private void addInputFields()
 	{
-		for(String i : tools.getLabels())
+		for(String i : tools.labels)
 			tools.getTextFields().put(i, new JTextField());
-	}
-	
-	public void insertInputFieldData(LinkedHashMap data)
-	{
-		tools.getTextFields().get("Title").setText((String)data.get("Title"));
-		tools.getTextFields().get("Release").setText((String)data.get("Released"));
-		tools.getTextFields().get("Rating").setText((String)data.get("imdbRating"));
-		tools.getTextFields().get("Director").setText((String)data.get("Director"));
-		tools.getTextFields().get("Genre").setText((String)data.get("Genre"));
-		tools.getTextFields().get("Runtime").setText((String)data.get("Runtime"));
-		tools.getTextFields().get("Plot").setText((String)data.get("Plot"));
-		repaint();
 	}
 	
 	private void addToMenu()
 	{
 		ArrayList<OptionMenuBar> menuItems = new ArrayList<>();
 		menuItems.add(new OptionMenuBar("Search"));
-		menuItems.get(0).add("Search", x -> new SearchMovieGUI());
+		menuItems.get(0).add("Search", x -> new SearchMovieGUI(tools));
 		super.getFrame().setJMenuBar(menuBarBuilder(menuItems));
+	}
+	
+	public void reDrawScreen()
+	{
+		repaint();
 	}
 	
 	private void buildTextBox() throws IOException
@@ -100,7 +95,7 @@ public class AddWindowGUI extends WindowBuilder {
 		buttonPanel.add(ok);
 		buttonPanel.add(cancel);
 
-		rightPanel.add(pictureBuilder("C:\\Users\\Nathanial\\Desktop\\standin.png", 214, 317));
+		rightPanel.add(pictureBuilder("standin.png", 214, 317));
 		rightPanel.add(buttonPanel);
 		
 		fullPanel.add(leftPanel);
@@ -109,10 +104,4 @@ public class AddWindowGUI extends WindowBuilder {
 		super.make();
 	}
 	
-	public static void main(String args[]) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, UnsupportedLookAndFeelException
-	{
-		AddWindowGUI test = new AddWindowGUI();
-	}
-	
-
 }

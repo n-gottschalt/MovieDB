@@ -12,6 +12,7 @@ import java.util.LinkedHashMap;
 import javax.swing.*;
 
 import addWindow.AddWindowGUI;
+import addWindow.AddWindowTools;
 import databaseJSON.Database;
 import databaseJSON.JacksonAPI;
 import menubar.OptionMenuBar;
@@ -42,9 +43,7 @@ public class MainWindow extends WindowBuilder{
 	{
 		ArrayList<OptionMenuBar> menuItems = new ArrayList<OptionMenuBar>();
 		menuItems.add(new OptionMenuBar("Movies"));
-		menuItems.get(0).add("Add", x -> new AddWindowGUI());
-		menuItems.get(0).add("Remove", x -> new AddWindowGUI());
-		menuItems.get(0).add("Update", x -> new AddWindowGUI());
+		menuItems.get(0).add("Add", x -> new AddWindowTools().run());
 		return menuItems;
 	}
 	
