@@ -22,10 +22,6 @@ public class AddWindowTools {
 	private String[] labels = {"Title", "Release", "Rating", "Director", "Genre",
 			"Runtime", "Plot"};
 	
-	public AddWindowTools()
-	{
-	}
-	
 	public void storeData() throws ClassNotFoundException, SQLException, ParseException, IOException
 	{
 		Database storeData = new Database();
