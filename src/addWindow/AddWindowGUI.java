@@ -26,13 +26,13 @@ import databaseJSON.Database;
 import menubar.OptionMenuBar;
 import windows.WindowBuilder;
 
-public class TestAddWindow extends WindowBuilder {
+public class AddWindowGUI extends WindowBuilder {
 
 	private HashMap<String, JTextField> textFields = new HashMap<>();
 	private String[] labels = {"Title", "Release", "Rating", "Director", "Genre",
 			"Runtime", "Plot"};
 	
-	public TestAddWindow() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, UnsupportedLookAndFeelException
+	public AddWindowGUI() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, UnsupportedLookAndFeelException
 	{
 		super(500, 500, "Add Window");
 		addInputFields();
@@ -134,7 +134,7 @@ public class TestAddWindow extends WindowBuilder {
 	
 	public static void main(String args[]) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, UnsupportedLookAndFeelException
 	{
-		TestAddWindow test = new TestAddWindow();
+		AddWindowGUI test = new AddWindowGUI();
 	}
 	
 
