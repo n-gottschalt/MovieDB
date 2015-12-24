@@ -28,6 +28,7 @@ import windows.WindowBuilder;
 
 public class AddWindowGUI extends WindowBuilder {
 
+	AddWindowTools tools = new AddWindowTools();
 	public AddWindowGUI() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, UnsupportedLookAndFeelException
 	{
 		super(500, 500, "Add Window");
@@ -38,15 +39,27 @@ public class AddWindowGUI extends WindowBuilder {
 	
 	private void addInputFields()
 	{
-		for(String i : labels)
-			textFields.put(i, new JTextField());
+		for(String i : tools.getLabels())
+			tools.getTextFields().put(i, new JTextField());
+	}
+	
+	public void insertInputFieldData(LinkedHashMap data)
+	{
+		tools.getTextFields().get("Title").setText((String)data.get("Title"));
+		tools.getTextFields().get("Release").setText((String)data.get("Released"));
+		tools.getTextFields().get("Rating").setText((String)data.get("imdbRating"));
+		tools.getTextFields().get("Director").setText((String)data.get("Director"));
+		tools.getTextFields().get("Genre").setText((String)data.get("Genre"));
+		tools.getTextFields().get("Runtime").setText((String)data.get("Runtime"));
+		tools.getTextFields().get("Plot").setText((String)data.get("Plot"));
+		repaint();
 	}
 	
 	private void addToMenu()
 	{
 		ArrayList<OptionMenuBar> menuItems = new ArrayList<>();
 		menuItems.add(new OptionMenuBar("Search"));
-		menuItems.get(0).add("Search", x -> new AddWindowGUI());
+		menuItems.get(0).add("Search", x -> new SearchMovieGUI());
 		super.getFrame().setJMenuBar(menuBarBuilder(menuItems));
 	}
 	
@@ -63,37 +76,31 @@ public class AddWindowGUI extends WindowBuilder {
 			public void actionPerformed(ActionEvent e)
 			{
 				try {
-					storeData();
+					tools.storeData();
 				} catch (ClassNotFoundException | SQLException | ParseException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
 		});
-		
-		
-		
-		
-		
+
 		JButton cancel = new JButton("Cancel");
 		
 		fullPanel.setLayout(new GridLayout(1, 2));
 		leftPanel.setLayout(new GridLayout(7, 2));
 		rightPanel.setLayout(new GridLayout(2, 1));
 		
-		for(String i : labels)
+		for(String i : tools.getLabels())
 		{
 			leftPanel.add(new JLabel(i));
-			leftPanel.add(textFields.get(i));
+			leftPanel.add(tools.getTextFields().get(i));
 		}
 		
 		buttonPanel.add(ok);
 		buttonPanel.add(cancel);
 
-		rightPanel.add(pictureBuilder("C:\\Users\\ngott_000\\git\\MovieDB\\standin.png", 214, 317));
+		rightPanel.add(pictureBuilder("C:\\Users\\Nathanial\\Desktop\\standin.png", 214, 317));
 		rightPanel.add(buttonPanel);
 		
 		fullPanel.add(leftPanel);

@@ -26,7 +26,7 @@ public class AddWindowTools {
 	{
 	}
 	
-	private void storeData() throws ClassNotFoundException, SQLException, ParseException, IOException
+	public void storeData() throws ClassNotFoundException, SQLException, ParseException, IOException
 	{
 		Database storeData = new Database();
 		LinkedHashMap<String, Object> dataToStore = new LinkedHashMap<>();
@@ -38,7 +38,7 @@ public class AddWindowTools {
 		dataToStore.put("Runtime", textFields.get("Runtime").getText());
 		dataToStore.put("Plot", textFields.get("Plot").getText());
 		
-			InputStream is = FileUtils.openInputStream(new File("C:\\Users\\ngott_000\\git\\MovieDB\\standin.png"));
+			InputStream is = FileUtils.openInputStream(new File("C:\\Users\\Nathanial\\Desktop\\standin.png"));
 			BufferedInputStream bis = new BufferedInputStream(is);
 			
 			ByteArrayBuffer baf = new ByteArrayBuffer(500);
@@ -49,6 +49,11 @@ public class AddWindowTools {
 		dataToStore.put("Art", baf.toByteArray());
 		
 		storeData.saveData(dataToStore);
+	}
+	
+	public HashMap<String, JTextField> getTextFields()
+	{
+		return textFields;
 	}
 	
 	public String[] getLabels()
