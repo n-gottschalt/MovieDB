@@ -28,10 +28,6 @@ import windows.WindowBuilder;
 
 public class AddWindowGUI extends WindowBuilder {
 
-	private HashMap<String, JTextField> textFields = new HashMap<>();
-	private String[] labels = {"Title", "Release", "Rating", "Director", "Genre",
-			"Runtime", "Plot"};
-	
 	public AddWindowGUI() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, UnsupportedLookAndFeelException
 	{
 		super(500, 500, "Add Window");
@@ -53,32 +49,6 @@ public class AddWindowGUI extends WindowBuilder {
 		menuItems.get(0).add("Search", x -> new AddWindowGUI());
 		super.getFrame().setJMenuBar(menuBarBuilder(menuItems));
 	}
-
-	private void storeData() throws ClassNotFoundException, SQLException, ParseException, IOException
-	{
-		Database storeData = new Database();
-		LinkedHashMap<String, Object> dataToStore = new LinkedHashMap<>();
-		dataToStore.put("Title", textFields.get("Title").getText());
-		dataToStore.put("Released", textFields.get("Release").getText());
-		dataToStore.put("imdbRating", textFields.get("Rating").getText());
-		dataToStore.put("Director", textFields.get("Director").getText());
-		dataToStore.put("Genre", textFields.get("Genre").getText());
-		dataToStore.put("Runtime", textFields.get("Runtime").getText());
-		dataToStore.put("Plot", textFields.get("Plot").getText());
-		
-			InputStream is = FileUtils.openInputStream(new File("C:\\Users\\ngott_000\\git\\MovieDB\\standin.png"));
-			BufferedInputStream bis = new BufferedInputStream(is);
-			
-			ByteArrayBuffer baf = new ByteArrayBuffer(500);
-			int current = 0;
-			while((current = bis.read()) != -1)
-				baf.append((byte) current);
-			
-		dataToStore.put("Art", baf.toByteArray());
-		
-		storeData.saveData(dataToStore);
-	}
-	
 	
 	private void buildTextBox() throws IOException
 	{
