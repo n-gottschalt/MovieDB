@@ -54,13 +54,13 @@ public class WindowBuilder extends JFrame{
 		UIManager.setLookAndFeel("com.jtattoo.plaf.mint.MintLookAndFeel");
 	}
 
-	protected JLabel pictureBuilder(String wherePictureLives, int width, int height) throws IOException
+	public static JLabel pictureBuilder(String wherePictureLives, int width, int height) throws IOException
 	{
 		BufferedImage image = ImageIO.read(new File(wherePictureLives));
 		return new JLabel(new ImageIcon(image.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
 	}
 	
-	protected JLabel pictureBuilder(byte[] pictureFromDB, int width, int height)
+	public static JLabel pictureBuilder(byte[] pictureFromDB, int width, int height)
 	{	
 		Image image = Toolkit.getDefaultToolkit().createImage(pictureFromDB);
 		return new JLabel(new ImageIcon(image.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
