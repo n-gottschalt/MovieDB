@@ -12,15 +12,19 @@ import org.apache.http.util.*;
 public class JacksonAPI {
 	
 	private static String[] types = {"Title", "Released", "imdbRating", "Director", "Genre", "Runtime", "Plot", "Poster"};
-
-	public static LinkedHashMap<String, Object> pullFromOMDB(String movieName) throws 
+	
+	public static LinkedHashMap<String, Object> pullFromOMDB(String movieName, int type) throws 
 	JsonParseException, MalformedURLException, IOException, ClassNotFoundException, InstantiationException, 
 	IllegalAccessException
 	{
 		LinkedHashMap<String, Object> dataFromJSON = new LinkedHashMap<String, Object>();
+		String nameQuery;
 		
-		String query = String.format("t=%s&r=json", URLEncoder.encode(movieName, "UTF-8"));
-		String url = "http://www.omdbapi.com/?" + query;
+		if(type == 0)
+			nameQuery = String.format("t=%s&r=json", URLEncoder.encode(movieName, "UTF-8"));
+		else
+			nameQuery = String.format("i=%s&r=json", URLEncoder.encode(movieName, "UTF-8"));
+		String url = "http://www.omdbapi.com/?" + nameQuery;
 	
 		JsonFactory factory = new JsonFactory();
 		JsonParser parser = factory.createParser(new URL(url));

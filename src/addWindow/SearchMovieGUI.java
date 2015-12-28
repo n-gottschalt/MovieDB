@@ -11,28 +11,49 @@ import databaseJSON.JacksonAPI;
 import windows.WindowBuilder;
 
 public class SearchMovieGUI extends WindowBuilder{
+	
+	private JPanel mainPanel = new JPanel();
+	private JTextField nameField = new JTextField("", 25);
+	private JButton button = new JButton("OK");
+	private String[] options = {"Movie Name", "IMDB id"};
+	private JComboBox selector = new JComboBox(options);
 
-	LinkedHashMap<String, Object> test;
 	public SearchMovieGUI(AddWindowTools tool) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException,
-			UnsupportedLookAndFeelException {
+			UnsupportedLookAndFeelException 
+	{
 		super(400, 200, "Search");
-		JPanel mainPanel = new JPanel();
-		JTextField field = new JTextField("", 25);
-		JButton button = new JButton("OK");
+
+		//enter
+		nameField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				actionToDo(tool, nameField);
+			}
+		});
+		
+		//click
 		button.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				try {
-					tool.insertInputFieldData(JacksonAPI.pullFromOMDB(field.getText()));
-				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IOException e1) {
-					e1.printStackTrace();
-				}
+				actionToDo(tool, nameField);
 			}
 		});
-		mainPanel.add(field);
+		mainPanel.add(selector);
+		mainPanel.add(nameField);
 		mainPanel.add(button);
 		super.getFrame().add(mainPanel);
 		super.make();
+	}
+	
+	private void actionToDo(AddWindowTools tool, JTextField field)
+	{
+		try {
+			tool.insertInputFieldData(JacksonAPI.pullFromOMDB(field.getText(), selector.getSelectedIndex()));
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IOException e1) {
+			e1.printStackTrace();
+		} 
+		super.getFrame().setVisible(false);
+		super.getFrame().dispose();
 	}
 }

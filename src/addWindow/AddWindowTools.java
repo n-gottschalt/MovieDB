@@ -1,23 +1,10 @@
 package addWindow;
 
-import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-
-import javax.imageio.ImageIO;
-import javax.swing.JTextField;
-import javax.swing.UnsupportedLookAndFeelException;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.apache.http.util.ByteArrayBuffer;
+import java.util.*;
+import javax.swing.*;
 
 import databaseJSON.Database;
 

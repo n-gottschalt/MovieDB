@@ -1,20 +1,14 @@
 package windows;
 
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-
+import java.util.*;
 import javax.swing.*;
 
-import addWindow.AddWindowGUI;
 import addWindow.AddWindowTools;
 import databaseJSON.Database;
-import databaseJSON.JacksonAPI;
 import menubar.OptionMenuBar;
 
 public class MainWindow extends WindowBuilder{
