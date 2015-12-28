@@ -47,6 +47,8 @@ public class MainWindow extends WindowBuilder{
 		return menuItems;
 	}
 	
+	//Loads in the movies to be displayed on the main screen
+	//the 'movies' object is pulled from the database
 	private JScrollPane buildMoviePanel(ArrayList<LinkedHashMap<String, Object>> movies) throws IOException
 	{
 		JPanel mainPanel = new JPanel();

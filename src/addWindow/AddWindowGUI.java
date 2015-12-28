@@ -28,7 +28,9 @@ import windows.WindowBuilder;
 
 public class AddWindowGUI extends WindowBuilder {
 
-	AddWindowTools tools;
+	public AddWindowTools tools;
+	public JLabel pictureHolder = pictureBuilder("standin.png", 214, 317);
+
 	public AddWindowGUI(AddWindowTools tools) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, UnsupportedLookAndFeelException
 	{
 		super(500, 500, "Add Window");
@@ -53,18 +55,14 @@ public class AddWindowGUI extends WindowBuilder {
 		super.getFrame().setJMenuBar(menuBarBuilder(menuItems));
 	}
 	
-	public void reDrawScreen()
+	public void setPicture(byte[] picture)
 	{
-		repaint();
+		pictureHolder = pictureBuilder(picture, 214, 317);
 	}
 	
-	private void buildTextBox() throws IOException
+	public JPanel rightPanelBuilder()
 	{
-		JPanel leftPanel = new JPanel();
-		JPanel fullPanel = new JPanel();
-		JPanel rightPanel = new JPanel();
 		JPanel buttonPanel = new JPanel();
-		
 		JButton ok = new JButton("Ok");
 		ok.addActionListener(new ActionListener()
 		{
@@ -81,7 +79,17 @@ public class AddWindowGUI extends WindowBuilder {
 		});
 
 		JButton cancel = new JButton("Cancel");
-		
+		buttonPanel.add(ok);
+		buttonPanel.add(cancel);
+		return buttonPanel;
+	}
+	
+	public void buildTextBox() throws IOException
+	{
+		JPanel leftPanel = new JPanel();
+		JPanel fullPanel = new JPanel();
+		JPanel rightPanel = new JPanel();
+
 		fullPanel.setLayout(new GridLayout(1, 2));
 		leftPanel.setLayout(new GridLayout(7, 2));
 		rightPanel.setLayout(new GridLayout(2, 1));
@@ -92,11 +100,8 @@ public class AddWindowGUI extends WindowBuilder {
 			leftPanel.add(tools.getTextFields().get(i));
 		}
 		
-		buttonPanel.add(ok);
-		buttonPanel.add(cancel);
-
-		rightPanel.add(pictureBuilder("standin.png", 214, 317));
-		rightPanel.add(buttonPanel);
+		rightPanel.add(pictureHolder);
+		rightPanel.add(rightPanelBuilder());
 		
 		fullPanel.add(leftPanel);
 		fullPanel.add(rightPanel);
