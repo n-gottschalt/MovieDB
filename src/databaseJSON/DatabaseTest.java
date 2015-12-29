@@ -10,13 +10,13 @@ public class DatabaseTest {
 
 	@Test
 	public void testGetData() throws ClassNotFoundException, SQLException {
-		assertEquals("Top Gun", new Database().getData().get(0).get("Title"));
+		assertEquals("Top Gun", new Database().getData().get(1).get("Title"));
 	}
 	
 	@Test
 	public void testGetDataString() throws ClassNotFoundException, SQLException
 	{
-		assertEquals("Marvel", new Database().getData("Marvel", "Title").get("Title"));
+		assertEquals("Inside Out", new Database().getData("Inside Out", "Title").get("Title"));
 	}
 
 

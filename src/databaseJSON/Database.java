@@ -4,49 +4,46 @@ import java.sql.*;
 import java.text.ParseException;
 import java.util.*;
 
+import addWindow.AddWindowTools;
 import tools.DateConversion;
 
 public class Database {
 
 	private Statement stmt;
-	private Connection c;
+	private Connection conn;
 	private Statement connection() throws ClassNotFoundException, SQLException
 	{
 		Class.forName("org.sqlite.JDBC");
-		c = DriverManager.getConnection("jdbc:sqlite:test.db");
-		stmt = c.createStatement();
+		conn = DriverManager.getConnection("jdbc:sqlite:test.db");
+		stmt = conn.createStatement();
 		return stmt;
 	}
 	
-	private PreparedStatement connectionP(String sql) throws ClassNotFoundException, SQLException
+	private PreparedStatement connectionPrepared(String sql) throws ClassNotFoundException, SQLException
 	{
 		Class.forName("org.sqlite.JDBC");
-		c = DriverManager.getConnection("jdbc:sqlite:test.db");
-		c.setAutoCommit(false);
-		return c.prepareStatement(sql);
+		conn = DriverManager.getConnection("jdbc:sqlite:test.db");
+		conn.setAutoCommit(false);
+		return conn.prepareStatement(sql);
 	}
 	
-	private ArrayList<LinkedHashMap<String, Object>> parseData(ResultSet rs) throws SQLException, ClassNotFoundException 
+	private ArrayList<LinkedHashMap<String, Object>> parseData(ResultSet rs) throws 
+		SQLException, ClassNotFoundException 
 	{
 		ArrayList<LinkedHashMap<String, Object>> dataToParse = new ArrayList<LinkedHashMap<String, Object>>();
 		int i = 0;
 		while(rs.next())
 		{
+			AddWindowTools.getLabels();
 			dataToParse.add(new LinkedHashMap<String, Object>());
-			dataToParse.get(i).put("MovieID", rs.getInt("MovieID"));
-			dataToParse.get(i).put("Title", rs.getString("Title"));
-			dataToParse.get(i).put("Release", rs.getString("Release"));
-			dataToParse.get(i).put("Review", rs.getLong("Review"));
-			dataToParse.get(i).put("Director", rs.getString("Director"));
-			dataToParse.get(i).put("Genre", rs.getString("Genre"));
-			dataToParse.get(i).put("Runtime", rs.getString("Runtime"));
-			dataToParse.get(i).put("Plot", rs.getString("Plot"));
+			for(String objectTitles : AddWindowTools.getLabels())
+				dataToParse.get(i).put(objectTitles, rs.getString(objectTitles));
 			dataToParse.get(i).put("Art", rs.getBytes("Art"));
 			i++;
 		}
 		rs.close();
 		connection().close();
-		c.close();
+		conn.close();
 		return dataToParse;
 	}
 	
@@ -66,10 +63,9 @@ public class Database {
 	
 	public void saveData(LinkedHashMap<String, Object> dataToSave) throws ClassNotFoundException, SQLException, ParseException
 	{
-		PreparedStatement pstmt = connectionP("INSERT INTO MOVIES (Title, Release, Review, Director"
+		PreparedStatement pstmt = connectionPrepared("INSERT INTO MOVIES (Title, Released, Rating, Director"
 				+ ",Genre, Runtime, Plot, Art)" 
 				+ " VALUES(?, ?, ?, ?, ?, ?, ?, ?);");
-		
 		
 		pstmt.setString(1, (String)dataToSave.get("Title"));
 		pstmt.setString(2,  DateConversion.parseDate((String)dataToSave.get("Released")));
@@ -81,17 +77,7 @@ public class Database {
 		pstmt.setString(7, (String)dataToSave.get("Plot"));
 		pstmt.setBytes(8, (byte[])dataToSave.get("Art"));
 		pstmt.executeUpdate();
-		c.commit();
-		c.close();
-	}
-	
-	public void saveData(byte[] picture) throws ClassNotFoundException, SQLException
-	{	
-		PreparedStatement pstmt = connectionP("INSERT INTO Movies (Art) VALUES (?);");
-		
-		pstmt.setBytes(1,picture);
-		pstmt.executeUpdate();
-		c.commit();
-		c.close();
+		conn.commit();
+		conn.close();
 	}
 }

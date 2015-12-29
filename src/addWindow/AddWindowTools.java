@@ -13,7 +13,7 @@ public class AddWindowTools {
 
 
 	private HashMap<String, JTextField> textFields = new HashMap<>();
-	public String[] labels = {"Title", "Released", "Rating", "Director", "Genre",
+	public static String[] labels = {"Title", "Released", "Rating", "Director", "Genre",
 			"Runtime", "Plot"};
 	
 	LinkedHashMap<String, Object> test;
@@ -67,7 +67,7 @@ public class AddWindowTools {
 		return textFields;
 	}
 	
-	public String[] getLabels()
+	public static String[] getLabels()
 	{
 		return labels;
 	}
