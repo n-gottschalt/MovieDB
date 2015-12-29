@@ -57,9 +57,11 @@ public class AddWindowTools {
 	
 	public void clearData() throws IOException
 	{
+		screen.clear();
+		screen.setPicture("standin.png");
 		for(String i : labels)
 			textFields.get(i).setText("");
-		screen.setPicture("standin.png");
+		screen.buildTextBox();
 	}
 	
 	public void insertInputFieldData(LinkedHashMap<String, Object> data) throws IOException

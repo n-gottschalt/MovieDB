@@ -85,8 +85,8 @@ public class AddWindowGUI extends WindowBuilder {
 					JOptionPane.showMessageDialog(getFrame(), "Movie added!");
 					tools.clearData();
 					// move to cancel section
-					tools.getMainWindow().clear();
-					tools.getMainWindow().buildWindow();
+					/*tools.getMainWindow().clear();
+					tools.getMainWindow().buildWindow(); */
 				} catch (ClassNotFoundException | SQLException | ParseException e1) {
 					e1.printStackTrace();
 				} catch (IOException e1) {
@@ -121,7 +121,7 @@ public class AddWindowGUI extends WindowBuilder {
 			leftPanel.add(new JLabel(i));
 			leftPanel.add(tools.getTextFields().get(i));
 		}
-		
+
 		rightPanel.add(pictureHolder);
 		rightPanel.add(rightPanelBuilder());
 		
