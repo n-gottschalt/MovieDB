@@ -1,9 +1,7 @@
 package addWindow;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.IOException;
-import java.util.LinkedHashMap;
 
 import javax.swing.*;
 
@@ -12,11 +10,12 @@ import windows.WindowBuilder;
 
 public class SearchMovieGUI extends WindowBuilder{
 	
+	private static final long serialVersionUID = -5206482244133103417L;
 	private JPanel mainPanel = new JPanel();
 	private JTextField nameField = new JTextField("", 25);
 	private JButton button = new JButton("OK");
 	private String[] options = {"Movie Name", "IMDB id"};
-	private JComboBox selector = new JComboBox(options);
+	private JComboBox<?> selector = new JComboBox<Object>(options);
 
 	public SearchMovieGUI(AddWindowTools tool) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException,
 			UnsupportedLookAndFeelException 

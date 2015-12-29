@@ -3,31 +3,18 @@ package addWindow;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.file.Files;
+import java.io.*;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-
+import java.util.*;
 import javax.swing.*;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.http.util.ByteArrayBuffer;
-
-import databaseJSON.Database;
 import menubar.OptionMenuBar;
 import windows.WindowBuilder;
 
 public class AddWindowGUI extends WindowBuilder {
-
+	
+	private static final long serialVersionUID = 1L;
 	public AddWindowTools tools;
 	public JLabel pictureHolder = pictureBuilder("standin.png", 214, 317);
 	private JPanel fullPanel;
@@ -40,12 +27,11 @@ public class AddWindowGUI extends WindowBuilder {
 		addInputFields();
 		addToMenu();
 		buildTextBox();
-		System.out.println(tools.getClass());
 	}
 	
 	private void addInputFields()
 	{
-		for(String i : tools.labels)
+		for(String i : AddWindowTools.labels)
 			tools.getTextFields().put(i, new JTextField());
 	}
 	
@@ -83,10 +69,7 @@ public class AddWindowGUI extends WindowBuilder {
 				try {
 					tools.storeData();
 					JOptionPane.showMessageDialog(getFrame(), "Movie added!");
-					tools.clearData();
-					// move to cancel section
-					/*tools.getMainWindow().clear();
-					tools.getMainWindow().buildWindow(); */
+					tools.clearData("standin.png");
 				} catch (ClassNotFoundException | SQLException | ParseException e1) {
 					e1.printStackTrace();
 				} catch (IOException e1) {
@@ -96,11 +79,30 @@ public class AddWindowGUI extends WindowBuilder {
 		});
 
 		JButton cancel = new JButton("Cancel");
+		cancel.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				try {
+					close();
+				} catch (ClassNotFoundException | IOException | SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		buttonPanel.add(ok);
 		buttonPanel.add(cancel);
 		return buttonPanel;
 	}
 
+	public void close() throws ClassNotFoundException, IOException, SQLException
+	{
+		super.getFrame().setVisible(false);
+		super.getFrame().dispose();
+		tools.getMainWindow().clear();
+		tools.getMainWindow().buildWindow(); 
+	}
+	
 	public void clear()
 	{
 		super.getFrame().remove(fullPanel);
@@ -116,7 +118,7 @@ public class AddWindowGUI extends WindowBuilder {
 		leftPanel.setLayout(new GridLayout(7, 2));
 		rightPanel.setLayout(new GridLayout(2, 1));
 		
-		for(String i : tools.getLabels())
+		for(String i : AddWindowTools.getLabels())
 		{
 			leftPanel.add(new JLabel(i));
 			leftPanel.add(tools.getTextFields().get(i));
