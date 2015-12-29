@@ -3,6 +3,8 @@ package addWindow;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.*;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -90,11 +92,23 @@ public class AddWindowGUI extends WindowBuilder {
 				}
 			}
 		});
+		
+		super.getFrame().addWindowListener(new WindowAdapter() 
+		{
+		    public void windowClosing(WindowEvent windowEvent) 
+		    {
+		       try {
+				close();
+			} catch (ClassNotFoundException | IOException | SQLException e) {
+				e.printStackTrace();
+			}
+		    }
+		});
+		
 		buttonPanel.add(ok);
 		buttonPanel.add(cancel);
 		return buttonPanel;
 	}
-
 	public void close() throws ClassNotFoundException, IOException, SQLException
 	{
 		super.getFrame().setVisible(false);
