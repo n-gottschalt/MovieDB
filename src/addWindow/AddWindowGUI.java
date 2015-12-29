@@ -30,6 +30,7 @@ public class AddWindowGUI extends WindowBuilder {
 
 	public AddWindowTools tools;
 	public JLabel pictureHolder = pictureBuilder("standin.png", 214, 317);
+	private JPanel fullPanel;
 
 	public AddWindowGUI(AddWindowTools tools) throws ClassNotFoundException, InstantiationException, 
 		IllegalAccessException, IOException, UnsupportedLookAndFeelException
@@ -83,6 +84,9 @@ public class AddWindowGUI extends WindowBuilder {
 					tools.storeData();
 					JOptionPane.showMessageDialog(getFrame(), "Movie added!");
 					tools.clearData();
+					// move to cancel section
+					tools.getMainWindow().clear();
+					tools.getMainWindow().buildWindow();
 				} catch (ClassNotFoundException | SQLException | ParseException e1) {
 					e1.printStackTrace();
 				} catch (IOException e1) {
@@ -97,10 +101,15 @@ public class AddWindowGUI extends WindowBuilder {
 		return buttonPanel;
 	}
 
+	public void clear()
+	{
+		super.getFrame().remove(fullPanel);
+	}
+	
 	public void buildTextBox() throws IOException
 	{
 		JPanel leftPanel = new JPanel();
-		JPanel fullPanel = new JPanel();
+		fullPanel = new JPanel();
 		JPanel rightPanel = new JPanel();
 
 		fullPanel.setLayout(new GridLayout(1, 2));

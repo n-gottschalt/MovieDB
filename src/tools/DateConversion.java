@@ -13,9 +13,4 @@ public class DateConversion {
 		formatter.applyPattern(newFormat);
 		return formatter.format(date);
 	}
-	
-	public static void main(String[] args) throws ParseException
-	{
-		System.out.println(parseDate("10 Jun 2010"));
-	}
 }

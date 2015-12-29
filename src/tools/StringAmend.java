@@ -9,8 +9,4 @@ public class StringAmend {
 		test = withMin.substring(0, (when - 1));
 		return test;
 	}
-	
-	public static void main(String[] args)
-	{
-	}
 }

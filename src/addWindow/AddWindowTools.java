@@ -5,20 +5,34 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.*;
 import javax.swing.*;
-
 import databaseJSON.Database;
-import windows.WindowBuilder;
+import windows.MainWindow;
 
 public class AddWindowTools {
 
-
 	private HashMap<String, JTextField> textFields = new HashMap<>();
+	private MainWindow main;
 	public static String[] labels = {"Title", "Released", "Rating", "Director", "Genre",
 			"Runtime", "Plot"};
 	
 	LinkedHashMap<String, Object> test;
 	
 	AddWindowGUI screen;
+	
+	public AddWindowTools()
+	{
+		
+	}
+	
+	public AddWindowTools(MainWindow main)
+	{
+		this.main = main;
+	}
+	
+	public MainWindow getMainWindow()
+	{
+		return main;
+	}
 	
 	public void run() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, UnsupportedLookAndFeelException
 	{
@@ -59,6 +73,7 @@ public class AddWindowTools {
 		textFields.get("Runtime").setText((String)data.get("Runtime"));
 		textFields.get("Plot").setText((String)data.get("Plot"));
 		screen.setPicture((byte[])data.get("Art"));
+		screen.clear();
 		screen.buildTextBox();
 	}
 	
@@ -70,11 +85,5 @@ public class AddWindowTools {
 	public static String[] getLabels()
 	{
 		return labels;
-	}
-	
-	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, UnsupportedLookAndFeelException
-	{
-		AddWindowTools test = new AddWindowTools();
-		test.run();
 	}
 }

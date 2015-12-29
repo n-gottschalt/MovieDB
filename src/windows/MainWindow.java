@@ -14,6 +14,8 @@ import menubar.OptionMenuBar;
 public class MainWindow extends WindowBuilder{
 
 	private static final long serialVersionUID = 1L;
+	private JPanel mainPanel;
+	private JScrollPane scroll;
 
 	public MainWindow() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, SQLException
 	{
@@ -37,15 +39,15 @@ public class MainWindow extends WindowBuilder{
 	{
 		ArrayList<OptionMenuBar> menuItems = new ArrayList<OptionMenuBar>();
 		menuItems.add(new OptionMenuBar("Movies"));
-		menuItems.get(0).add("Add", x -> new AddWindowTools().run());
+		menuItems.get(0).add("Add", x -> new AddWindowTools(this).run());
 		return menuItems;
 	}
 	
 	//Loads in the movies to be displayed on the main screen
 	//the 'movies' object is pulled from the database
-	private JScrollPane buildMoviePanel(ArrayList<LinkedHashMap<String, Object>> movies) throws IOException
+	public JScrollPane buildMoviePanel(ArrayList<LinkedHashMap<String, Object>> movies) throws IOException
 	{
-		JPanel mainPanel = new JPanel();
+		mainPanel = new JPanel();
 		mainPanel.setLayout(new GridLayout(0,6));
 		JPanel subPanel;
 		for(LinkedHashMap<String, Object> i : movies)
@@ -56,8 +58,13 @@ public class MainWindow extends WindowBuilder{
 			subPanel.add(new JLabel((String)i.get("Title")));
 			mainPanel.add(subPanel);
 		}
-		JScrollPane scroll = new JScrollPane(mainPanel);
+		scroll = new JScrollPane(mainPanel);
 		return scroll;
+	}
+	
+	public void clear()
+	{
+		getFrame().remove(scroll);
 	}
 	
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, UnsupportedLookAndFeelException, SQLException, ParseException
