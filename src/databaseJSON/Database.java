@@ -80,4 +80,19 @@ public class Database {
 		conn.commit();
 		conn.close();
 	}
+	
+	public void removeData(String movieTitle) throws ClassNotFoundException, SQLException
+	{
+		PreparedStatement pstmt = connectionPrepared("DELETE FROM MOVIES "
+				+ "WHERE Title=\'" + movieTitle + "\';");
+		pstmt.executeUpdate();
+		conn.commit();
+		conn.close();
+	}
+	
+	public static void main(String[] args) throws ClassNotFoundException, SQLException
+	{
+		Database test = new Database();
+		test.removeData("Hackers");
+	}
 }

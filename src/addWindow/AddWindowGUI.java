@@ -24,7 +24,7 @@ public class AddWindowGUI extends WindowBuilder {
 	public AddWindowGUI(AddWindowTools tools) throws ClassNotFoundException, InstantiationException, 
 		IllegalAccessException, IOException, UnsupportedLookAndFeelException
 	{
-		super(500, 500, "Add Window");
+		super(500, 600, "Add Window");
 		this.tools = tools;
 		addInputFields();
 		addToMenu();
@@ -35,6 +35,9 @@ public class AddWindowGUI extends WindowBuilder {
 	{
 		for(String i : AddWindowTools.labels)
 			tools.getTextFields().put(i, new JTextField());
+		JTextArea temp = new JTextArea(4, 40);
+		temp.setLineWrap(true);
+		tools.getTextFields().put("Plot", temp);
 	}
 	
 	private void addToMenu()
@@ -60,7 +63,7 @@ public class AddWindowGUI extends WindowBuilder {
 		return super.getFrame();
 	}
 	
-	public JPanel rightPanelBuilder()
+	public JPanel buttonBuilder()
 	{
 		JPanel buttonPanel = new JPanel();
 		JButton ok = new JButton("Ok");
@@ -125,26 +128,35 @@ public class AddWindowGUI extends WindowBuilder {
 	public void buildTextBox() throws IOException
 	{
 		JPanel leftPanel = new JPanel();
-		fullPanel = new JPanel();
-		JPanel rightPanel = new JPanel();
-
-		fullPanel.setLayout(new GridLayout(1, 2));
-		leftPanel.setLayout(new GridLayout(7, 2));
-		rightPanel.setLayout(new GridLayout(2, 1));
-		
+		leftPanel.setLayout(new GridLayout(6, 2));
 		for(String i : AddWindowTools.getLabels())
 		{
-			leftPanel.add(new JLabel(i));
-			leftPanel.add(tools.getTextFields().get(i));
+			if(!(i.equals("Plot")))
+			{
+				leftPanel.add(new JLabel(i));
+				leftPanel.add(tools.getTextFields().get(i));
+			}
 		}
-
-		rightPanel.add(pictureHolder);
-		rightPanel.add(rightPanelBuilder());
 		
-		fullPanel.add(leftPanel);
-		fullPanel.add(rightPanel);
+		JPanel rightPanel = new JPanel();
+		rightPanel.add(pictureHolder);
+		
+		JPanel bottomPanel = new JPanel();
+		bottomPanel.add(new JLabel("Plot"));
+		bottomPanel.add(tools.getTextFields().get("Plot"));
+		bottomPanel.add(new JPanel().add(buttonBuilder()));
+		
+		JPanel topPanel = new JPanel();
+		topPanel.setLayout(new GridLayout(1, 2));
+		topPanel.add(leftPanel);
+		topPanel.add(rightPanel);
+	
+		fullPanel = new JPanel();
+		fullPanel.setLayout(new GridLayout(2, 1));
+		fullPanel.add(topPanel);
+		fullPanel.add(bottomPanel);
+
 		super.getFrame().add(fullPanel);
 		super.make();
 	}
-	
 }

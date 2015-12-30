@@ -5,20 +5,21 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.*;
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
+
 import databaseJSON.Database;
 import windows.MainWindow;
 
 public class AddWindowTools {
 
-	private HashMap<String, JTextField> textFields = new HashMap<>();
+	private HashMap<String, JTextComponent> textFields = new HashMap<>();
 	private MainWindow main;
 	public static String[] labels = {"Title", "Released", "Rating", "Director", "Genre",
-			"Runtime", "Plot"};
+			"Runtime"};
 	
 	LinkedHashMap<String, Object> data;
 	
 	AddWindowGUI screen;
-	
 	
 	public AddWindowTools(MainWindow main)
 	{
@@ -52,6 +53,7 @@ public class AddWindowTools {
 		screen.setPicture(picture);
 		for(String i : labels)
 			textFields.get(i).setText("");
+		textFields.get("Plot").setText("");
 		screen.buildTextBox();
 	}
 	
@@ -71,14 +73,17 @@ public class AddWindowTools {
 		clearData((byte[])data.get("Art"));
 		textFields.get("Title").setText((String)data.get("Title"));
 		textFields.get("Released").setText((String)data.get("Released"));
-		textFields.get("Rating").setText((String)data.get("imdbRating"));
+		if(data.containsKey("imdbRating"))
+			textFields.get("Rating").setText((String)data.get("imdbRating"));
+		else
+			textFields.get("Rating").setText((String)data.get("Rating"));
 		textFields.get("Director").setText((String)data.get("Director"));
 		textFields.get("Genre").setText((String)data.get("Genre"));
 		textFields.get("Runtime").setText((String)data.get("Runtime"));
 		textFields.get("Plot").setText((String)data.get("Plot"));
 	}
 	
-	public HashMap<String, JTextField> getTextFields()
+	public HashMap<String, JTextComponent> getTextFields()
 	{
 		return textFields;
 	}

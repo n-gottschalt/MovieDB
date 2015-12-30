@@ -1,6 +1,10 @@
 package windows;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -8,6 +12,7 @@ import java.util.*;
 import javax.swing.*;
 
 import addWindow.AddWindowTools;
+import addWindow.ModifyWindow;
 import databaseJSON.Database;
 import menubar.OptionMenuBar;
 
@@ -16,11 +21,15 @@ public class MainWindow extends WindowBuilder{
 	private static final long serialVersionUID = 1L;
 	private JPanel mainPanel;
 	private JScrollPane scroll;
+	
+	private ModifyWindow modifyWindow;
+	private MainWindow mainScreen;
 
 	public MainWindow() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, SQLException
 	{
 		super(screenSize(), "Main Window");
 		buildWindow();
+		this.mainScreen = this;
 	}
 
 	public static Dimension screenSize()
@@ -49,10 +58,24 @@ public class MainWindow extends WindowBuilder{
 	{
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new GridLayout(0,6));
-		JPanel subPanel;
 		for(LinkedHashMap<String, Object> i : movies)
 		{
-			subPanel = new JPanel();
+			JPanel subPanel = new JPanel();
+			subPanel.addMouseListener(new MouseAdapter()
+			{
+				public void mouseClicked(MouseEvent e)
+				{
+					try {
+						modifyWindow = new ModifyWindow(mainScreen, ((JLabel)subPanel.getComponent(1)).getText());
+					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IOException
+							| UnsupportedLookAndFeelException e1) {
+						e1.printStackTrace();
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+				}
+			});
+			
 			subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.PAGE_AXIS));
 			subPanel.add(super.pictureBuilder((byte[])i.get("Art"), 214, 317));
 			subPanel.add(new JLabel((String)i.get("Title")));
