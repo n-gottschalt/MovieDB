@@ -9,9 +9,12 @@ import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 
 import menubar.*;
+import tools.Close;
 
 public class WindowBuilder extends JFrame{
 	
@@ -64,6 +67,20 @@ public class WindowBuilder extends JFrame{
 	{	
 		Image image = Toolkit.getDefaultToolkit().createImage(pictureFromDB);
 		return new JLabel(new ImageIcon(image.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+	}
+	
+	public void setFrameClose(Close x)
+	{
+		//Not lambda because extra code needed due to it being
+		//WindowListener not ActionListener
+		getFrame().addWindowListener(new WindowAdapter() 
+		{
+			public void windowClosing(WindowEvent windowEvent) 
+			{
+				
+			}
+		});
+				
 	}
 	
 	public void make()

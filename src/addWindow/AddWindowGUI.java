@@ -1,10 +1,7 @@
 package addWindow;
 
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.io.*;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -18,7 +15,7 @@ public class AddWindowGUI extends WindowBuilder {
 	
 	private static final long serialVersionUID = 1L;
 	public AddWindowTools tools;
-	public JLabel pictureHolder = pictureBuilder("standin.png", 214, 317);
+	public JLabel pictureHolder;
 	private JPanel fullPanel;
 	private JPanel buttonPanel;
 
@@ -27,6 +24,8 @@ public class AddWindowGUI extends WindowBuilder {
 	{
 		super(500, 600, "Add Window");
 		this.tools = tools;
+		pictureHolder = pictureBuilder("standin.png", 214, 317);
+		
 		buttonBuilder();
 		addInputFields();
 		addToMenu();
@@ -59,66 +58,43 @@ public class AddWindowGUI extends WindowBuilder {
 	{
 		pictureHolder = pictureBuilder(picture, 214, 317);
 	}
-	
-	public JFrame getFrame()
-	{
-		return super.getFrame();
-	}
-	
+
 	public void buttonBuilder()
 	{
 		buttonPanel = new JPanel();
 		JButton ok = new JButton("Ok");
-		ok.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				try {
-					tools.storeData();
-					JOptionPane.showMessageDialog(getFrame(), "Movie added!");
-					tools.clearData("standin.png");
-				} catch (ClassNotFoundException | SQLException | ParseException e1) {
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
+		ok.addActionListener(x -> okAction());
 
 		JButton cancel = new JButton("Cancel");
-		cancel.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				try {
-					close();
-				} catch (ClassNotFoundException | IOException | SQLException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		
-		super.getFrame().addWindowListener(new WindowAdapter() 
-		{
-		    public void windowClosing(WindowEvent windowEvent) 
-		    {
-		       try {
-				close();
-			} catch (ClassNotFoundException | IOException | SQLException e) {
-				e.printStackTrace();
-			}
-		    }
-		});
+		cancel.addActionListener(x -> close());
 		
 		buttonPanel.add(ok);
 		buttonPanel.add(cancel);
 	}
-	public void close() throws ClassNotFoundException, IOException, SQLException
+	
+	public void okAction()
 	{
-		super.getFrame().setVisible(false);
-		super.getFrame().dispose();
-		tools.getMainWindow().clear();
-		tools.getMainWindow().buildWindow(); 
+		try {
+			tools.storeData();
+			JOptionPane.showMessageDialog(getFrame(), "Movie added!");
+			tools.clearData("standin.png");
+		} catch (ClassNotFoundException | SQLException | ParseException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void close() 
+	{
+		try {
+			super.getFrame().setVisible(false);
+			super.getFrame().dispose();
+			tools.getMainWindow().clear();
+			tools.getMainWindow().buildWindow();
+		} catch (ClassNotFoundException | IOException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 	}
 	
 	public void clear()
@@ -165,4 +141,10 @@ public class AddWindowGUI extends WindowBuilder {
 	{
 		this.buttonPanel = buttonPanel;
 	}
+	
+	public JFrame getFrame()
+	{
+		return super.getFrame();
+	}
+	
 }
