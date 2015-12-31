@@ -66,7 +66,7 @@ public class MainWindow extends WindowBuilder{
 				public void mouseClicked(MouseEvent e)
 				{
 					try {
-						modifyWindow = new ModifyWindow(mainScreen, ((JLabel)subPanel.getComponent(1)).getText());
+						modifyWindow = new ModifyWindow(mainScreen, i);
 					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IOException
 							| UnsupportedLookAndFeelException e1) {
 						e1.printStackTrace();

@@ -66,7 +66,6 @@ public class AddWindowTools {
 		screen.buildTextBox();
 	}
 	
-	
 	public void insertInputFieldData(LinkedHashMap<String, Object> data) throws IOException
 	{
 		this.data = data;
@@ -98,4 +97,8 @@ public class AddWindowTools {
 		return main;
 	}
 	
+	public AddWindowGUI getWindowGUI()
+	{
+		return screen;
+	}
 }

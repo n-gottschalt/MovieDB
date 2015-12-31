@@ -38,7 +38,9 @@ public class Database {
 			dataToParse.add(new LinkedHashMap<String, Object>());
 			for(String objectTitles : AddWindowTools.getLabels())
 				dataToParse.get(i).put(objectTitles, rs.getString(objectTitles));
+			dataToParse.get(i).put("Plot", rs.getString("Plot"));
 			dataToParse.get(i).put("Art", rs.getBytes("Art"));
+			dataToParse.get(i).put("MovieID", rs.getString("MovieID"));
 			i++;
 		}
 		rs.close();
@@ -58,6 +60,13 @@ public class Database {
 			String typeOfData) throws ClassNotFoundException, SQLException
 	{
 		ResultSet rs = connection().executeQuery("SELECT * FROM movies WHERE " + typeOfData + " = \"" + valueToLookFor +"\"");
+		return parseData(rs).get(0);
+	}
+	
+	public LinkedHashMap<String, Object> getData(int valueToLookFor,
+			String typeOfData) throws ClassNotFoundException, SQLException
+	{
+		ResultSet rs = connection().executeQuery("SELECT * FROM movies WHERE " + typeOfData + " = " + valueToLookFor + ";" );
 		return parseData(rs).get(0);
 	}
 	
@@ -90,9 +99,24 @@ public class Database {
 		conn.close();
 	}
 	
-	public static void main(String[] args) throws ClassNotFoundException, SQLException
+	public void modifyData(LinkedHashMap<String, Object> dataToSave) 
+			throws ClassNotFoundException, SQLException, ParseException
 	{
-		Database test = new Database();
-		test.removeData("Hackers");
+		PreparedStatement pstmt = connectionPrepared("UPDATE MOVIES"
+				+ " SET Title=? WHERE MovieID=" + dataToSave.get("MovieID") + ";");
+		pstmt.setString(1, (String)dataToSave.get("Title"));
+		System.out.println(dataToSave.get("MovieID"));
+	/*	pstmt.setString(2,  DateConversion.parseDate((String)dataToSave.get("Released")));
+		pstmt.setDouble(3, Double.valueOf((String)dataToSave.get("imdbRating")));
+		pstmt.setString(4, (String)dataToSave.get("Director"));
+		pstmt.setString(5, (String)dataToSave.get("Genre"));
+		pstmt.setInt(6, Integer.valueOf(((String)dataToSave.get("Runtime"))
+				.substring(0, (((String)dataToSave.get("Runtime")).indexOf('m') - 1))));
+		pstmt.setString(7, (String)dataToSave.get("Plot"));
+		pstmt.setBytes(8, (byte[])dataToSave.get("Art"));
+		pstmt.setInt(9, movieID); */
+		pstmt.executeUpdate();
+		conn.commit();
+		conn.close();
 	}
 }

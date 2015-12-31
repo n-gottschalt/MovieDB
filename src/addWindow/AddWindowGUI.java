@@ -20,12 +20,14 @@ public class AddWindowGUI extends WindowBuilder {
 	public AddWindowTools tools;
 	public JLabel pictureHolder = pictureBuilder("standin.png", 214, 317);
 	private JPanel fullPanel;
+	private JPanel buttonPanel;
 
 	public AddWindowGUI(AddWindowTools tools) throws ClassNotFoundException, InstantiationException, 
 		IllegalAccessException, IOException, UnsupportedLookAndFeelException
 	{
 		super(500, 600, "Add Window");
 		this.tools = tools;
+		buttonBuilder();
 		addInputFields();
 		addToMenu();
 		buildTextBox();
@@ -63,9 +65,9 @@ public class AddWindowGUI extends WindowBuilder {
 		return super.getFrame();
 	}
 	
-	public JPanel buttonBuilder()
+	public void buttonBuilder()
 	{
-		JPanel buttonPanel = new JPanel();
+		buttonPanel = new JPanel();
 		JButton ok = new JButton("Ok");
 		ok.addActionListener(new ActionListener()
 		{
@@ -110,7 +112,6 @@ public class AddWindowGUI extends WindowBuilder {
 		
 		buttonPanel.add(ok);
 		buttonPanel.add(cancel);
-		return buttonPanel;
 	}
 	public void close() throws ClassNotFoundException, IOException, SQLException
 	{
@@ -144,7 +145,7 @@ public class AddWindowGUI extends WindowBuilder {
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.add(new JLabel("Plot"));
 		bottomPanel.add(tools.getTextFields().get("Plot"));
-		bottomPanel.add(new JPanel().add(buttonBuilder()));
+		bottomPanel.add(new JPanel().add(buttonPanel));
 		
 		JPanel topPanel = new JPanel();
 		topPanel.setLayout(new GridLayout(1, 2));
@@ -158,5 +159,15 @@ public class AddWindowGUI extends WindowBuilder {
 
 		super.getFrame().add(fullPanel);
 		super.make();
+	}
+	
+	public JPanel getButtonPanel()
+	{
+		return buttonPanel;
+	}
+	
+	public void setButtonPanel(JPanel buttonPanel)
+	{
+		this.buttonPanel = buttonPanel;
 	}
 }
