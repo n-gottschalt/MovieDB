@@ -77,7 +77,7 @@ public class WindowBuilder extends JFrame{
 		{
 			public void windowClosing(WindowEvent windowEvent) 
 			{
-				
+				x.close();
 			}
 		});
 				

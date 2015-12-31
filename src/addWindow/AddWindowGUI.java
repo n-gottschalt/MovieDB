@@ -9,6 +9,8 @@ import java.util.*;
 import javax.swing.*;
 
 import menubar.OptionMenuBar;
+import tools.Close;
+import windows.MainWindow;
 import windows.WindowBuilder;
 
 public class AddWindowGUI extends WindowBuilder {
@@ -16,6 +18,8 @@ public class AddWindowGUI extends WindowBuilder {
 	private static final long serialVersionUID = 1L;
 	public AddWindowTools tools;
 	public JLabel pictureHolder;
+	private String pictureLives;
+	private String rootProjectDirectory;
 	private JPanel fullPanel;
 	private JPanel buttonPanel;
 
@@ -24,8 +28,11 @@ public class AddWindowGUI extends WindowBuilder {
 	{
 		super(500, 600, "Add Window");
 		this.tools = tools;
-		pictureHolder = pictureBuilder("standin.png", 214, 317);
-		
+		rootProjectDirectory = MainWindow.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		pictureLives = rootProjectDirectory + "standin.png";
+		pictureHolder = pictureBuilder(pictureLives, 214, 317);
+		System.out.println(pictureLives);
+		super.setFrameClose(() -> close());
 		buttonBuilder();
 		addInputFields();
 		addToMenu();
@@ -52,6 +59,7 @@ public class AddWindowGUI extends WindowBuilder {
 	public void setPicture(String picture) throws IOException
 	{
 		pictureHolder = pictureBuilder(picture, 214, 317);
+		pictureLives = rootProjectDirectory + picture;
 	}
 	
 	public void setPicture(byte[] picture)
@@ -62,13 +70,13 @@ public class AddWindowGUI extends WindowBuilder {
 	public void buttonBuilder()
 	{
 		buttonPanel = new JPanel();
+		
 		JButton ok = new JButton("Ok");
 		ok.addActionListener(x -> okAction());
+		buttonPanel.add(ok);
 
 		JButton cancel = new JButton("Cancel");
 		cancel.addActionListener(x -> close());
-		
-		buttonPanel.add(ok);
 		buttonPanel.add(cancel);
 	}
 	
@@ -79,7 +87,6 @@ public class AddWindowGUI extends WindowBuilder {
 			JOptionPane.showMessageDialog(getFrame(), "Movie added!");
 			tools.clearData("standin.png");
 		} catch (ClassNotFoundException | SQLException | ParseException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -92,7 +99,6 @@ public class AddWindowGUI extends WindowBuilder {
 			tools.getMainWindow().clear();
 			tools.getMainWindow().buildWindow();
 		} catch (ClassNotFoundException | IOException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 	}
@@ -116,6 +122,24 @@ public class AddWindowGUI extends WindowBuilder {
 		}
 		
 		JPanel rightPanel = new JPanel();
+		pictureHolder.addMouseListener(new MouseAdapter()
+		{
+			public void mouseClicked(MouseEvent e)
+			{
+				JFileChooser test = new JFileChooser();
+				test.showOpenDialog(fullPanel);
+				String picture = test.getSelectedFile().getAbsolutePath();
+				try {
+					tools.updatePictureData(picture, tools.tempTest(picture));
+					
+					
+					
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		rightPanel.add(pictureHolder);
 		
 		JPanel bottomPanel = new JPanel();
@@ -145,6 +169,11 @@ public class AddWindowGUI extends WindowBuilder {
 	public JFrame getFrame()
 	{
 		return super.getFrame();
+	}
+	
+	public String getPictureLive()
+	{
+		return pictureLives;
 	}
 	
 }

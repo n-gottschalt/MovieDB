@@ -21,6 +21,7 @@ public class SearchMovieGUI extends WindowBuilder{
 			UnsupportedLookAndFeelException 
 	{
 		super(400, 200, "Search");
+		super.setFrameClose(() -> close());
 
 		//enter
 		nameField.addActionListener(new ActionListener() {
@@ -53,6 +54,12 @@ public class SearchMovieGUI extends WindowBuilder{
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IOException e1) {
 			e1.printStackTrace();
 		} 
+		super.getFrame().setVisible(false);
+		super.getFrame().dispose();
+	}
+	
+	public void close()
+	{
 		super.getFrame().setVisible(false);
 		super.getFrame().dispose();
 	}
