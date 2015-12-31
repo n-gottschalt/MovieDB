@@ -7,10 +7,16 @@ public class DateConversion {
 
 	public static String parseDate(String unFormated) throws ParseException
 	{
-		String newFormat = "MM/dd/YYY";
-		SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
-		Date date = formatter.parse(unFormated);
-		formatter.applyPattern(newFormat);
-		return formatter.format(date);
+		if(!(unFormated.contains("/")))
+		{
+			String newFormat = "MM/dd/YYY";
+			SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
+			Date date = formatter.parse(unFormated);
+			formatter.applyPattern(newFormat);
+			return formatter.format(date);
+		}
+		else
+			//Work on error issues
+			return unFormated;
 	}
 }

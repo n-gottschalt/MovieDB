@@ -33,7 +33,11 @@ public class AddWindowTools {
 	
 	public void storeData() throws ClassNotFoundException, SQLException, ParseException, IOException
 	{
-		Database storeData = new Database();
+		new Database().saveData(modifyTest());
+	}
+	
+	public LinkedHashMap<String, Object> modifyTest()
+	{
 		LinkedHashMap<String, Object> dataToStore = new LinkedHashMap<>();
 		dataToStore.put("Title", textFields.get("Title").getText());
 		dataToStore.put("Released", textFields.get("Released").getText());
@@ -43,8 +47,8 @@ public class AddWindowTools {
 		dataToStore.put("Runtime", textFields.get("Runtime").getText());
 		dataToStore.put("Plot", textFields.get("Plot").getText());
 		dataToStore.put("Art", (byte[])data.get("Art"));
-	
-		storeData.saveData(dataToStore);
+		
+		return dataToStore;
 	}
 	
 	public void clearData(String picture) throws IOException
@@ -100,5 +104,10 @@ public class AddWindowTools {
 	public AddWindowGUI getWindowGUI()
 	{
 		return screen;
+	}
+	
+	public AddWindowTools getTools()
+	{
+		return this;
 	}
 }

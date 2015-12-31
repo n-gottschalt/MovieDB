@@ -99,24 +99,30 @@ public class Database {
 		conn.close();
 	}
 	
-	public void modifyData(LinkedHashMap<String, Object> dataToSave) 
+	public void modifyData(LinkedHashMap<String, Object> dataToSave, int movieID) 
 			throws ClassNotFoundException, SQLException, ParseException
 	{
 		PreparedStatement pstmt = connectionPrepared("UPDATE MOVIES"
-				+ " SET Title=? WHERE MovieID=" + dataToSave.get("MovieID") + ";");
+				+ " SET Title=?, Released=?, Rating=?, Director=?,"
+				+ " Genre=?, Runtime=?, Plot=?, Art=?"
+				+ " WHERE MovieID=" + movieID + ";");
 		pstmt.setString(1, (String)dataToSave.get("Title"));
-		System.out.println(dataToSave.get("MovieID"));
-	/*	pstmt.setString(2,  DateConversion.parseDate((String)dataToSave.get("Released")));
+		pstmt.setString(2,  DateConversion.parseDate((String)dataToSave.get("Released")));
 		pstmt.setDouble(3, Double.valueOf((String)dataToSave.get("imdbRating")));
 		pstmt.setString(4, (String)dataToSave.get("Director"));
 		pstmt.setString(5, (String)dataToSave.get("Genre"));
 		pstmt.setInt(6, Integer.valueOf(((String)dataToSave.get("Runtime"))
 				.substring(0, (((String)dataToSave.get("Runtime")).indexOf('m') - 1))));
 		pstmt.setString(7, (String)dataToSave.get("Plot"));
-		pstmt.setBytes(8, (byte[])dataToSave.get("Art"));
-		pstmt.setInt(9, movieID); */
+		pstmt.setBytes(8, (byte[])dataToSave.get("Art")); 
 		pstmt.executeUpdate();
 		conn.commit();
 		conn.close();
+	}
+	
+	public void deleteData(int movieID)
+	{
+		PreparedStatement pstmt = "DELETE FROM MOVIES"
+				+ " "
 	}
 }

@@ -161,11 +161,6 @@ public class AddWindowGUI extends WindowBuilder {
 		super.make();
 	}
 	
-	public JPanel getButtonPanel()
-	{
-		return buttonPanel;
-	}
-	
 	public void setButtonPanel(JPanel buttonPanel)
 	{
 		this.buttonPanel = buttonPanel;
