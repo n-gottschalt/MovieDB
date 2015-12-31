@@ -48,6 +48,7 @@ public class SearchMovieGUI extends WindowBuilder{
 	private void actionToDo(AddWindowTools tool, JTextField field)
 	{
 		try {
+			tool.getWindowGUI().buttonBuilder();
 			tool.insertInputFieldData(JacksonAPI.pullFromOMDB(field.getText(), selector.getSelectedIndex()));
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IOException e1) {
 			e1.printStackTrace();

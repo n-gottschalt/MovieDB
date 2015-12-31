@@ -120,9 +120,12 @@ public class Database {
 		conn.close();
 	}
 	
-	public void deleteData(int movieID)
+	public void deleteData(int movieID) throws ClassNotFoundException, SQLException
 	{
-		PreparedStatement pstmt = "DELETE FROM MOVIES"
-				+ " "
+		PreparedStatement pstmt = connectionPrepared("DELETE FROM MOVIES"
+				+ " WHERE MovieID=" + movieID +";");
+		pstmt.executeUpdate();
+		conn.commit();
+		conn.close();
 	}
 }
