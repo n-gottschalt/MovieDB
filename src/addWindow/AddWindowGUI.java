@@ -15,8 +15,8 @@ import windows.WindowBuilder;
 public class AddWindowGUI extends WindowBuilder {
 	
 	private static final long serialVersionUID = 1L;
-	public AddWindowTools tools;
-	public JLabel pictureHolder;
+	private AddWindowTools tools;
+	private JLabel pictureHolder;
 	private String pictureLives;
 	private String defaultPicture = rootProjectDirectory + "standin.png";
 	private static String rootProjectDirectory = 
@@ -30,8 +30,11 @@ public class AddWindowGUI extends WindowBuilder {
 		super(500, 600, "Add Window");
 		this.tools = tools;
 		pictureLives = defaultPicture;
+		//store picture into our data set
+		tools.getData().put("Art", AddWindowTools.convertPictureToByte(pictureLives));
 		pictureHolder = pictureBuilder(pictureLives, 214, 317);
 		super.setFrameClose(() -> close());
+		//Buttons built here for addWindow box, when using modify, need seperate buttons, own method
 		buttonBuilder();
 		addInputFields();
 		addToMenu();
@@ -42,9 +45,9 @@ public class AddWindowGUI extends WindowBuilder {
 	{
 		for(String i : AddWindowTools.labels)
 			tools.getTextFields().put(i, new JTextField());
-		JTextArea textArea = new JTextArea(4, 40);
-		textArea.setLineWrap(true);
-		tools.getTextFields().put("Plot", textArea);
+		JTextArea plotTextArea = new JTextArea(4, 40);
+		plotTextArea.setLineWrap(true);
+		tools.getTextFields().put("Plot", plotTextArea);
 	}
 	
 	private void addToMenu()
@@ -112,11 +115,8 @@ public class AddWindowGUI extends WindowBuilder {
 		JPanel leftPanel = new JPanel(new GridLayout(6, 2));
 		for(String i : AddWindowTools.getLabels())
 		{
-			if(!(i.equals("Plot")))
-			{
-				leftPanel.add(new JLabel(i));
-				leftPanel.add(tools.getTextFields().get(i));
-			}
+			leftPanel.add(new JLabel(i));
+			leftPanel.add(tools.getTextFields().get(i));
 		}
 		
 		JPanel rightPanel = new JPanel();
@@ -124,18 +124,14 @@ public class AddWindowGUI extends WindowBuilder {
 		{
 			public void mouseClicked(MouseEvent e)
 			{
-				JFileChooser test = new JFileChooser();
-				test.showOpenDialog(fullPanel);
-				String picture = test.getSelectedFile().getAbsolutePath();
+				JFileChooser clickPicture = new JFileChooser();
+				clickPicture.showOpenDialog(fullPanel);
 				try {
-					tools.updatePictureData(picture, tools.tempTest(picture));
-					
-					
-					
+					String pictureLocation = clickPicture.getSelectedFile().getAbsolutePath();
+					tools.updatePictureData(pictureLocation, tools.currentDataInTextFields(pictureLocation));
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}
+				} catch (NullPointerException e2){} //No option was picked from File Chooser
 			}
 		});
 		rightPanel.add(pictureHolder);
@@ -173,5 +169,4 @@ public class AddWindowGUI extends WindowBuilder {
 	{
 		return pictureLives;
 	}
-	
 }

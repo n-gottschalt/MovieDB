@@ -1,6 +1,5 @@
 package addWindow;
 
-import java.awt.event.*;
 import java.io.IOException;
 
 import javax.swing.*;
@@ -24,21 +23,11 @@ public class SearchMovieGUI extends WindowBuilder{
 		super.setFrameClose(() -> close());
 
 		//enter
-		nameField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) 
-			{
-				actionToDo(tool, nameField);
-			}
-		});
+		nameField.addActionListener(x -> actionToDo(tool, nameField));
 		
 		//click
-		button.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				actionToDo(tool, nameField);
-			}
-		});
+		button.addActionListener(x -> actionToDo(tool, nameField));
+		
 		mainPanel.add(selector);
 		mainPanel.add(nameField);
 		mainPanel.add(button);

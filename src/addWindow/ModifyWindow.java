@@ -44,7 +44,7 @@ public class ModifyWindow extends AddWindowTools {
 	private void setModify()
 	{
 		try {
-			new Database().modifyData(tools.modifyTest(), 
+			new Database().modifyData(tools.currentDataInTextFields(), 
 					Integer.parseInt((String)data.get("MovieID")));
 			JOptionPane.showMessageDialog(tools.getWindowGUI().getFrame(), "Movie modified!");
 			tools.getWindowGUI().close();

@@ -1,9 +1,7 @@
 package addWindow;
 
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.*;
@@ -19,10 +17,10 @@ public class AddWindowTools {
 
 	private HashMap<String, JTextComponent> textFields = new HashMap<>();
 	private MainWindow main;
-	public static String[] labels = {"Title", "Released", "Rating", "Director", "Genre",
-			"Runtime"};
+	public static String[] labels = {"Title", "Released", "Rating", 
+			"Director", "Genre", "Runtime"};
 	
-	LinkedHashMap<String, Object> data;
+	LinkedHashMap<String, Object> data = new LinkedHashMap<String, Object>();
 	
 	AddWindowGUI screen;
 	
@@ -30,33 +28,36 @@ public class AddWindowTools {
 	{
 		this.main = main;
 	}
-
-	public void run() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, UnsupportedLookAndFeelException
+ 
+	public void run() throws ClassNotFoundException, 
+	InstantiationException, IllegalAccessException, IOException, UnsupportedLookAndFeelException
 	{
 		screen = new AddWindowGUI(this);
 	}
 	
 	public void storeData() throws ClassNotFoundException, SQLException, ParseException, IOException
 	{
-		new Database().saveData(modifyTest());
+		new Database().saveData(currentDataInTextFields());
 	}
 	
-	public LinkedHashMap<String, Object> modifyTest()
+	public LinkedHashMap<String, Object> currentDataInTextFields()
 	{
-		LinkedHashMap<String, Object> dataToStore = new LinkedHashMap<>();
-		dataToStore.put("Title", textFields.get("Title").getText());
-		dataToStore.put("Released", textFields.get("Released").getText());
-		dataToStore.put("imdbRating", textFields.get("Rating").getText());
-		dataToStore.put("Director", textFields.get("Director").getText());
-		dataToStore.put("Genre", textFields.get("Genre").getText());
-		dataToStore.put("Runtime", textFields.get("Runtime").getText());
-		dataToStore.put("Plot", textFields.get("Plot").getText());
+		LinkedHashMap<String, Object> dataToStore = getDataFromTextFields();
 		dataToStore.put("Art", (byte[])data.get("Art"));
 		
 		return dataToStore;
 	}
 	
-	public LinkedHashMap<String, Object> tempTest(String wherePictureLives) throws IOException
+	public LinkedHashMap<String, Object> currentDataInTextFields(String wherePictureLives) 
+			throws IOException
+	{
+		LinkedHashMap<String, Object> dataToStore = getDataFromTextFields();
+		dataToStore.put("Art", convertPictureToByte(wherePictureLives));
+			
+		return dataToStore;
+	}
+	
+	private LinkedHashMap<String, Object> getDataFromTextFields()
 	{
 		LinkedHashMap<String, Object> dataToStore = new LinkedHashMap<>();
 		dataToStore.put("Title", textFields.get("Title").getText());
@@ -66,17 +67,16 @@ public class AddWindowTools {
 		dataToStore.put("Genre", textFields.get("Genre").getText());
 		dataToStore.put("Runtime", textFields.get("Runtime").getText());
 		dataToStore.put("Plot", textFields.get("Plot").getText());
-		
-		BufferedImage image = ImageIO.read(new File(wherePictureLives));
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ImageIO.write(image, "png", baos);
-		baos.flush();
-		byte[] imageInByte = baos.toByteArray();
-		baos.close();
-		dataToStore.put("Art", imageInByte);
-			
-		
 		return dataToStore;
+	}
+	
+	public void clearData(byte[] picture) throws IOException
+	{
+		screen.clear();
+		screen.setPicture(picture);
+		for(String i : labels)
+			textFields.get(i).setText("");
+		screen.buildTextBox();
 	}
 	
 	public void clearData(String picture) throws IOException
@@ -89,35 +89,22 @@ public class AddWindowTools {
 		screen.buildTextBox();
 	}
 	
-	public void clearData(byte[] picture) throws IOException
-	{
-		screen.clear();
-		screen.setPicture(picture);
-		for(String i : labels)
-			textFields.get(i).setText("");
-		screen.buildTextBox();
-	}
-	
 	public void insertInputFieldData(LinkedHashMap<String, Object> data) throws IOException
 	{
 		this.data = data;
 		clearData((byte[])data.get("Art"));
-		textFields.get("Title").setText((String)data.get("Title"));
-		textFields.get("Released").setText((String)data.get("Released"));
-		if(data.containsKey("imdbRating"))
-			textFields.get("Rating").setText((String)data.get("imdbRating"));
-		else
-			textFields.get("Rating").setText((String)data.get("Rating"));
-		textFields.get("Director").setText((String)data.get("Director"));
-		textFields.get("Genre").setText((String)data.get("Genre"));
-		textFields.get("Runtime").setText((String)data.get("Runtime"));
-		textFields.get("Plot").setText((String)data.get("Plot"));
+		setTextFields();
 	}
 	
 	public void updatePictureData(String picture, LinkedHashMap<String, Object> data) throws IOException
 	{
 		this.data = data;
 		clearData(picture);
+		setTextFields();
+	}
+	
+	private void setTextFields()
+	{
 		textFields.get("Title").setText((String)data.get("Title"));
 		textFields.get("Released").setText((String)data.get("Released"));
 		if(data.containsKey("imdbRating"))
@@ -128,6 +115,17 @@ public class AddWindowTools {
 		textFields.get("Genre").setText((String)data.get("Genre"));
 		textFields.get("Runtime").setText((String)data.get("Runtime"));
 		textFields.get("Plot").setText((String)data.get("Plot"));
+	}
+	
+	public static byte[] convertPictureToByte(String wherePictureLives) throws IOException
+	{
+		BufferedImage image = ImageIO.read(new File(wherePictureLives));
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write(image, "png", baos);
+		baos.flush();
+		byte[] imageInByte = baos.toByteArray();
+		baos.close();
+		return imageInByte;
 	}
 	
 	public HashMap<String, JTextComponent> getTextFields()
@@ -153,5 +151,10 @@ public class AddWindowTools {
 	public AddWindowTools getTools()
 	{
 		return this;
+	}
+	
+	public LinkedHashMap<String, Object> getData()
+	{
+		return data;
 	}
 }
