@@ -9,7 +9,6 @@ import java.util.*;
 import javax.swing.*;
 
 import menubar.OptionMenuBar;
-import tools.Close;
 import windows.MainWindow;
 import windows.WindowBuilder;
 
@@ -19,7 +18,9 @@ public class AddWindowGUI extends WindowBuilder {
 	public AddWindowTools tools;
 	public JLabel pictureHolder;
 	private String pictureLives;
-	private String rootProjectDirectory;
+	private String defaultPicture = rootProjectDirectory + "standin.png";
+	private static String rootProjectDirectory = 
+			MainWindow.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 	private JPanel fullPanel;
 	private JPanel buttonPanel;
 
@@ -28,10 +29,8 @@ public class AddWindowGUI extends WindowBuilder {
 	{
 		super(500, 600, "Add Window");
 		this.tools = tools;
-		rootProjectDirectory = MainWindow.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-		pictureLives = rootProjectDirectory + "standin.png";
+		pictureLives = defaultPicture;
 		pictureHolder = pictureBuilder(pictureLives, 214, 317);
-		System.out.println(pictureLives);
 		super.setFrameClose(() -> close());
 		buttonBuilder();
 		addInputFields();
@@ -43,9 +42,9 @@ public class AddWindowGUI extends WindowBuilder {
 	{
 		for(String i : AddWindowTools.labels)
 			tools.getTextFields().put(i, new JTextField());
-		JTextArea temp = new JTextArea(4, 40);
-		temp.setLineWrap(true);
-		tools.getTextFields().put("Plot", temp);
+		JTextArea textArea = new JTextArea(4, 40);
+		textArea.setLineWrap(true);
+		tools.getTextFields().put("Plot", textArea);
 	}
 	
 	private void addToMenu()
@@ -85,7 +84,7 @@ public class AddWindowGUI extends WindowBuilder {
 		try {
 			tools.storeData();
 			JOptionPane.showMessageDialog(getFrame(), "Movie added!");
-			tools.clearData("standin.png");
+			tools.clearData(defaultPicture);
 		} catch (ClassNotFoundException | SQLException | ParseException | IOException e) {
 			e.printStackTrace();
 		}
@@ -110,8 +109,7 @@ public class AddWindowGUI extends WindowBuilder {
 	
 	public void buildTextBox() throws IOException
 	{
-		JPanel leftPanel = new JPanel();
-		leftPanel.setLayout(new GridLayout(6, 2));
+		JPanel leftPanel = new JPanel(new GridLayout(6, 2));
 		for(String i : AddWindowTools.getLabels())
 		{
 			if(!(i.equals("Plot")))
