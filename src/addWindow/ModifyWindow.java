@@ -68,6 +68,6 @@ public class ModifyWindow extends AddWindowTools {
 	
 	private void setClose()
 	{
-		tools.getWindowGUI().close();
+		tools.getWindowGUI().cancel();
 	}
 }

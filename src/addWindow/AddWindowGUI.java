@@ -84,12 +84,21 @@ public class AddWindowGUI extends WindowBuilder {
 	
 	public void okAction()
 	{
-		try {
-			tools.storeData();
-			JOptionPane.showMessageDialog(getFrame(), "Movie added!");
-			tools.clearData(defaultPicture);
-		} catch (ClassNotFoundException | SQLException | ParseException | IOException e) {
-			e.printStackTrace();
+		if((tools.getTextFields().get("Released").getText()).matches("^(\\d{2}/{1}\\d{2}/{1}\\d{4})$")
+				|| tools.getTextFields().get("Released").getText().matches("^(\\d{2}\\s{1}\\w{3}\\s{1}\\d{4})$"))
+		{	
+			try {
+				tools.storeData();
+				JOptionPane.showMessageDialog(getFrame(), "Movie added!");
+				tools.clearData(defaultPicture);
+			} catch (ClassNotFoundException | SQLException | ParseException | IOException e) {
+				e.printStackTrace();
+			}
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(getFrame(),
+					"Please enter date in correct format MM/DD/YYYY");
 		}
 	}
 	
@@ -103,6 +112,12 @@ public class AddWindowGUI extends WindowBuilder {
 		} catch (ClassNotFoundException | IOException | SQLException e) {
 			e.printStackTrace();
 		} 
+	}
+	
+	public void cancel() 
+	{
+		super.getFrame().setVisible(false);
+		super.getFrame().dispose();
 	}
 	
 	public void clear()
