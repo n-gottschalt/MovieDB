@@ -38,7 +38,7 @@ public class WindowBuilder extends JFrame{
 		menuBarBuilder();
 	}
 	
-	protected WindowBuilder(int windowSizeX, int windowSizeY, String title) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
+	public WindowBuilder(int windowSizeX, int windowSizeY, String title) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
 	{
 		this.windowSizeX = windowSizeX;
 		this.windowSizeY = windowSizeY;
@@ -49,7 +49,7 @@ public class WindowBuilder extends JFrame{
 		UIManager.setLookAndFeel("com.jtattoo.plaf.mint.MintLookAndFeel");
 	}
 	
-	protected WindowBuilder(Dimension size, String title) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
+	public WindowBuilder(Dimension size, String title) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
 	{
 		this.title = title;
 		mainFrame = new JFrame(this.title);
@@ -100,5 +100,11 @@ public class WindowBuilder extends JFrame{
 	public JFrame getFrame()
 	{
 		return mainFrame;
+	}
+	
+	public void close()
+	{
+		getFrame().setVisible(false);
+		getFrame().dispose();
 	}
 }

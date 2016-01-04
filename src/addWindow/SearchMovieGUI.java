@@ -1,6 +1,7 @@
 package addWindow;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
 
 import javax.swing.*;
 
@@ -15,13 +16,12 @@ public class SearchMovieGUI extends WindowBuilder{
 	private JButton button = new JButton("OK");
 	private String[] options = {"Movie Name", "IMDB id"};
 	private JComboBox<?> selector = new JComboBox<Object>(options);
-
+	
 	public SearchMovieGUI(AddWindowTools tool) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException,
 			UnsupportedLookAndFeelException 
 	{
 		super(400, 200, "Search");
 		super.setFrameClose(() -> close());
-
 		//enter
 		nameField.addActionListener(x -> actionToDo(tool, nameField));
 		
@@ -38,18 +38,26 @@ public class SearchMovieGUI extends WindowBuilder{
 	private void actionToDo(AddWindowTools tool, JTextField field)
 	{
 		try {
+			JOptionPane test = new JOptionPane();
+			test.setMessage("TEST");
+			test.setVisible(true);
 			tool.getWindowGUI().buttonBuilder();
-			tool.insertInputFieldData(JacksonAPI.pullFromOMDB(field.getText(), selector.getSelectedIndex()));
+			LinkedHashMap<String, Object> imdbData = JacksonAPI.pullFromOMDB(field.getText(), 
+					selector.getSelectedIndex(), super.getFrame());
+			if(!(imdbData.containsKey("ERROR")))
+			{
+				test.setVisible(false);
+				tool.insertInputFieldData(imdbData);
+				super.close();
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(super.getFrame(),
+					"Unable to find movie. Please check the Spelling "
+					+ "or try searching by imdb id.");
+			}
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IOException e1) {
 			e1.printStackTrace();
 		} 
-		super.getFrame().setVisible(false);
-		super.getFrame().dispose();
-	}
-	
-	public void close()
-	{
-		super.getFrame().setVisible(false);
-		super.getFrame().dispose();
 	}
 }
