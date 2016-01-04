@@ -84,8 +84,7 @@ public class AddWindowGUI extends WindowBuilder {
 	
 	public void okAction()
 	{
-		if((tools.getTextFields().get("Released").getText()).matches("^(\\d{2}/{1}\\d{2}/{1}\\d{4})$")
-				|| tools.getTextFields().get("Released").getText().matches("^(\\d{2}\\s{1}\\w{3}\\s{1}\\d{4})$"))
+		if(checkData())
 		{	
 			try {
 				tools.storeData();
@@ -95,11 +94,20 @@ public class AddWindowGUI extends WindowBuilder {
 				e.printStackTrace();
 			}
 		}
-		else
-		{
-			JOptionPane.showMessageDialog(getFrame(),
-					"Please enter date in correct format MM/DD/YYYY");
-		}
+	}
+	
+	public boolean checkData()
+	{
+		if(
+			((tools.getTextFields().get("Released").getText()).matches("^(\\d{2}/{1}\\d{2}/{1}\\d{4})$")
+			|| (tools.getTextFields().get("Released").getText().matches("^(\\d{2}\\s{1}\\w{3}\\s{1}\\d{4})$"))
+			&& ((tools.getTextFields().get("Rating").getText().matches("^(\\d+\\.{1}\\d+)"))))
+			)
+			return true;
+		JOptionPane.showMessageDialog(getFrame(),
+				"Please enter date in correct format:\n"
+				+ "Released: MM/DD/YYYY\nReview: #.#");
+		return false;
 	}
 	
 	public void close() 

@@ -61,7 +61,6 @@ public class ModifyWindow extends AddWindowTools {
 					(String)data.get("Title") + " has been deleted.");
 			tools.getWindowGUI().close();
 		} catch (NumberFormatException | ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
