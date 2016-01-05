@@ -9,7 +9,6 @@ import java.util.*;
 import javax.swing.*;
 
 import menubar.OptionMenuBar;
-import windows.MainWindow;
 import windows.WindowBuilder;
 
 public class AddWindowGUI extends WindowBuilder {
@@ -18,9 +17,7 @@ public class AddWindowGUI extends WindowBuilder {
 	private AddWindowTools tools;
 	private JLabel pictureHolder;
 	private String pictureLives;
-	private String defaultPicture = rootProjectDirectory + "standin.png";
-	private static String rootProjectDirectory = 
-			MainWindow.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+	private String defaultPicture = getClass().getResource("/standin.png").getPath();
 	private JPanel fullPanel;
 	private JPanel buttonPanel;
 
@@ -61,7 +58,7 @@ public class AddWindowGUI extends WindowBuilder {
 	public void setPicture(String picture) throws IOException
 	{
 		pictureHolder = pictureBuilder(picture, 214, 317);
-		pictureLives = rootProjectDirectory + picture;
+		pictureLives = picture;
 	}
 	
 	public void setPicture(byte[] picture)

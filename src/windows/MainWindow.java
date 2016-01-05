@@ -1,10 +1,7 @@
 package windows;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -22,6 +19,7 @@ public class MainWindow extends WindowBuilder{
 	private JPanel mainPanel;
 	private JScrollPane scroll;
 	
+	@SuppressWarnings("unused")
 	private ModifyWindow modifyWindow;
 	private MainWindow mainScreen;
 
