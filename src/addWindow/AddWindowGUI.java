@@ -122,12 +122,6 @@ public class AddWindowGUI extends WindowBuilder {
 		} 
 	}
 	
-	public void cancel() 
-	{
-		super.getFrame().setVisible(false);
-		super.getFrame().dispose();
-	}
-	
 	public void clear()
 	{
 		super.getFrame().remove(fullPanel);

@@ -38,15 +38,11 @@ public class SearchMovieGUI extends WindowBuilder{
 	private void actionToDo(AddWindowTools tool, JTextField field)
 	{
 		try {
-			JOptionPane test = new JOptionPane();
-			test.setMessage("TEST");
-			test.setVisible(true);
 			tool.getWindowGUI().buttonBuilder();
 			LinkedHashMap<String, Object> imdbData = JacksonAPI.pullFromOMDB(field.getText(), 
 					selector.getSelectedIndex(), super.getFrame());
 			if(!(imdbData.containsKey("ERROR")))
 			{
-				test.setVisible(false);
 				tool.insertInputFieldData(imdbData);
 				super.close();
 			}
