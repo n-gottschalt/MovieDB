@@ -14,7 +14,7 @@ public class Database {
 	private Statement connection() throws ClassNotFoundException, SQLException
 	{
 		Class.forName("org.sqlite.JDBC");
-		conn = DriverManager.getConnection("jdbc:sqlite:test.db");
+		conn = DriverManager.getConnection("jdbc:sqlite:Movie.db");
 		stmt = conn.createStatement();
 		return stmt;
 	}
@@ -22,7 +22,7 @@ public class Database {
 	private PreparedStatement connectionPrepared(String sql) throws ClassNotFoundException, SQLException
 	{
 		Class.forName("org.sqlite.JDBC");
-		conn = DriverManager.getConnection("jdbc:sqlite:test.db");
+		conn = DriverManager.getConnection("jdbc:sqlite:Movie.db");
 		conn.setAutoCommit(false);
 		return conn.prepareStatement(sql);
 	}
@@ -52,8 +52,18 @@ public class Database {
 	public ArrayList<LinkedHashMap<String, Object>> getData() 
 			throws ClassNotFoundException, SQLException
 	{
-		ResultSet rs = connection().executeQuery("SELECT * FROM movies");
-		return parseData(rs);
+		ResultSet rs;
+		ArrayList<LinkedHashMap<String, Object>> parsedData = null;
+		try{			
+			rs = connection().executeQuery("SELECT * FROM movies");
+		    parsedData = parseData(rs);
+		} catch (SQLException e)
+		{
+			createDatabase();
+			rs = connection().executeQuery("SELECT * FROM movies");
+		    parsedData = parseData(rs);
+		}
+		return parsedData;
 	}
 	
 	public LinkedHashMap<String, Object> getData(String valueToLookFor,
@@ -124,6 +134,24 @@ public class Database {
 	{
 		PreparedStatement pstmt = connectionPrepared("DELETE FROM MOVIES"
 				+ " WHERE MovieID=" + movieID +";");
+		pstmt.executeUpdate();
+		conn.commit();
+		conn.close();
+	}
+	
+	private void createDatabase() throws ClassNotFoundException, SQLException
+	{
+		Class.forName("org.sqlite.JDBC");
+		conn = DriverManager.getConnection("jdbc:sqlite:Movie.db");
+		createTable();
+	}
+	
+	private void createTable() throws ClassNotFoundException, SQLException
+	{
+		PreparedStatement pstmt = connectionPrepared("CREATE TABLE Movies "
+				+"( MovieID	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE," 
+				+"Title	TEXT, Released	NUMERIC, Rating	REAL, Director	TEXT,"
+				+"Genre	TEXT, Runtime	INTEGER, Plot	TEXT, Art	BLOB)");
 		pstmt.executeUpdate();
 		conn.commit();
 		conn.close();
