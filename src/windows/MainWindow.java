@@ -77,6 +77,7 @@ public class MainWindow extends WindowBuilder{
 			subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.PAGE_AXIS));
 			subPanel.add(super.pictureBuilder((byte[])i.get("Art"), 214, 317));
 			subPanel.add(new JLabel((String)i.get("Title")));
+			
 			mainPanel.add(subPanel);
 		}
 		scroll = new JScrollPane(mainPanel);

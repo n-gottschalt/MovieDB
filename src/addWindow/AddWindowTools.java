@@ -2,6 +2,7 @@ package addWindow;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.URL;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.*;
@@ -80,6 +81,16 @@ public class AddWindowTools {
 	}
 	
 	public void clearData(String picture) throws IOException
+	{
+		screen.clear();
+		screen.setPicture(picture);
+		for(String i : labels)
+			textFields.get(i).setText("");
+		textFields.get("Plot").setText("");
+		screen.buildTextBox();
+	}
+	
+	public void clearData(URL picture) throws IOException
 	{
 		screen.clear();
 		screen.setPicture(picture);

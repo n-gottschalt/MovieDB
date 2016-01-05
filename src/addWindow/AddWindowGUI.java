@@ -3,11 +3,13 @@ package addWindow;
 import java.awt.GridLayout;
 import java.awt.event.*;
 import java.io.*;
+import java.net.URL;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.*;
 import javax.swing.*;
 
+import databaseJSON.JacksonAPI;
 import menubar.OptionMenuBar;
 import windows.WindowBuilder;
 
@@ -16,8 +18,7 @@ public class AddWindowGUI extends WindowBuilder {
 	private static final long serialVersionUID = 1L;
 	private AddWindowTools tools;
 	private JLabel pictureHolder;
-	private String pictureLives;
-	private String defaultPicture = getClass().getResource("/standin.png").getPath();
+	private URL pictureLives = URL.class.getResource("/resources/standin.png");;
 	private JPanel fullPanel;
 	private JPanel buttonPanel;
 
@@ -26,10 +27,9 @@ public class AddWindowGUI extends WindowBuilder {
 	{
 		super(500, 600, "Add Window");
 		this.tools = tools;
-		pictureLives = defaultPicture;
 		//store picture into our data set
-		tools.getData().put("Art", AddWindowTools.convertPictureToByte(pictureLives));
-		pictureHolder = pictureBuilder(pictureLives, 214, 317);
+		tools.getData().put("Art", JacksonAPI.addPictureToHash(pictureLives));
+		pictureHolder = pictureBuilder(JacksonAPI.addPictureToHash(pictureLives), 214, 317);
 		super.setFrameClose(() -> close());
 		//Buttons built here for addWindow box, when using modify, need seperate buttons, own method
 		buttonBuilder();
@@ -58,7 +58,12 @@ public class AddWindowGUI extends WindowBuilder {
 	public void setPicture(String picture) throws IOException
 	{
 		pictureHolder = pictureBuilder(picture, 214, 317);
-		pictureLives = picture;
+		//pictureLives = picture;
+	}
+	
+	public void setPicture(URL picture) throws IOException
+	{
+		pictureHolder = pictureBuilder(JacksonAPI.addPictureToHash(pictureLives), 214, 317);
 	}
 	
 	public void setPicture(byte[] picture)
@@ -86,7 +91,7 @@ public class AddWindowGUI extends WindowBuilder {
 			try {
 				tools.storeData();
 				JOptionPane.showMessageDialog(getFrame(), "Movie added!");
-				tools.clearData(defaultPicture);
+				tools.clearData(pictureLives);
 			} catch (ClassNotFoundException | SQLException | ParseException | IOException e) {
 				e.printStackTrace();
 			}
@@ -177,10 +182,5 @@ public class AddWindowGUI extends WindowBuilder {
 	public JFrame getFrame()
 	{
 		return super.getFrame();
-	}
-	
-	public String getPictureLive()
-	{
-		return pictureLives;
 	}
 }

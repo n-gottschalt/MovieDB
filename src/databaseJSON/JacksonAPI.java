@@ -63,7 +63,7 @@ public class JacksonAPI {
 		return dataFromJSON;
 	}
 	
-	private static byte[] addPictureToHash(URL picture) throws IOException
+	public static byte[] addPictureToHash(URL picture) throws IOException
 	{
 		URLConnection ucon = picture.openConnection();
 		
