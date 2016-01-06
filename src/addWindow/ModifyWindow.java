@@ -3,6 +3,8 @@ package addWindow;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 import javax.swing.*;
@@ -18,6 +20,7 @@ public class ModifyWindow extends AddWindowTools {
 	IllegalAccessException, IOException, UnsupportedLookAndFeelException, SQLException {
 		super(main);
 		super.run();
+		super.getWindowGUI().setFrameClose(() -> compareDifference());
 		tools = super.getTools();
 		//change buttons on AddWindowGUI
 		JPanel buttonPanel = new JPanel();
@@ -40,6 +43,36 @@ public class ModifyWindow extends AddWindowTools {
 		super.getTextFields().get("Runtime").setText(
 				super.getTextFields().get("Runtime").getText() + " min");
 	}
+	
+	private void compareDifference()
+	{
+		LinkedHashMap<String, Object> dataInFields = tools.getDataFromTextFields();
+		Collection<Object> dataInFieldsCollection = dataInFields.values();
+		Iterator<Object> dataInFieldsCollectionITR = dataInFieldsCollection.iterator();
+		
+		LinkedHashMap<String, Object> localData = data;
+		//take care of the 'min' issue
+		localData.replace("Runtime", localData.get("Runtime") + " min");
+		Collection<Object> dataCollection = data.values();
+		Iterator<Object> dataCollectionITR = dataCollection.iterator();
+
+		for(int i = 0; i < dataInFieldsCollection.size(); i++)
+		{
+			if(!(dataInFieldsCollectionITR.next().toString()).equals(dataCollectionITR.next().toString()))
+			{
+				verifyChange();
+				break;
+			}
+		}
+		setClose();
+	}
+	
+	private void verifyChange()
+	{
+		if(JOptionPane.showConfirmDialog(tools.getWindowGUI().getFrame(), "Do you want to save changes?") == 0)
+			setModify();
+	}
+	
 	
 	private void setModify()
 	{

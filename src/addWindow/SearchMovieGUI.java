@@ -28,8 +28,8 @@ public class SearchMovieGUI extends WindowBuilder{
 		//click
 		button.addActionListener(x -> actionToDo(tool, nameField));
 		
-		mainPanel.add(selector);
 		mainPanel.add(nameField);
+		mainPanel.add(selector);
 		mainPanel.add(button);
 		super.getFrame().add(mainPanel);
 		super.make();

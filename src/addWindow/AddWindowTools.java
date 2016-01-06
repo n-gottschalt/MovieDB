@@ -58,7 +58,7 @@ public class AddWindowTools {
 		return dataToStore;
 	}
 	
-	private LinkedHashMap<String, Object> getDataFromTextFields()
+	public LinkedHashMap<String, Object> getDataFromTextFields()
 	{
 		LinkedHashMap<String, Object> dataToStore = new LinkedHashMap<>();
 		dataToStore.put("Title", textFields.get("Title").getText());
