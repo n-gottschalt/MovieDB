@@ -18,7 +18,7 @@ public class AddWindowGUI extends WindowBuilder {
 	private static final long serialVersionUID = 1L;
 	private AddWindowTools tools;
 	private JLabel pictureHolder;
-	private URL pictureLives = URL.class.getResource("/resources/standin.png");;
+	private URL pictureLives = URL.class.getResource("/resources/standin.png");
 	private JPanel fullPanel;
 	private JPanel buttonPanel;
 
@@ -58,7 +58,6 @@ public class AddWindowGUI extends WindowBuilder {
 	public void setPicture(String picture) throws IOException
 	{
 		pictureHolder = pictureBuilder(picture, 214, 317);
-		//pictureLives = picture;
 	}
 	
 	public void setPicture(URL picture) throws IOException

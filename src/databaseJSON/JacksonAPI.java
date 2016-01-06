@@ -31,7 +31,6 @@ public class JacksonAPI {
 		JsonFactory factory = new JsonFactory();
 		JsonParser parser = factory.createParser(new URL(url));
 		
-		try {
 			while(!parser.isClosed())
 			{
 				JsonToken token = parser.nextToken();
@@ -46,18 +45,19 @@ public class JacksonAPI {
 					{
 						token = parser.nextToken();
 						if(types[i].equals("Poster"))
+						{
+							try {
 							dataFromJSON.put("Art", addPictureToHash(new URL(parser.getText())));
+							} catch (NullPointerException | MalformedURLException e)
+							{
+								dataFromJSON.put("Art", addPictureToHash(URL.class.getResource("/resources/notfound.png")));
+							}
+						}
 						else
 							dataFromJSON.put(types[i], parser.getText());
 					}
 				}
 			}
-		}
-		catch(MalformedURLException e)
-		{
-			dataFromJSON.put("ERROR", "ERROR");
-			return dataFromJSON;
-		}
 		if(dataFromJSON.size() < 8)
 			dataFromJSON.put("ERROR", "ERROR");
 		return dataFromJSON;

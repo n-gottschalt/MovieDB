@@ -39,7 +39,7 @@ public class JacksonAPITest {
 	@Test
 	public void testIMDBid() throws JsonParseException, MalformedURLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException
 	{
-		assertEquals("Top Gun", JacksonAPI.pullFromOMDB("tt0092099", 1, new JFrame()).get("Title"));
+		assertEquals("The Lion King", JacksonAPI.pullFromOMDB("tt0110357", 1, new JFrame()).get("Title"));
 	}
 
 }
