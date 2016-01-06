@@ -56,6 +56,22 @@ public class MainWindow extends WindowBuilder{
 	{
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new GridLayout(0,6));
+		
+		Collections.sort(movies, new Comparator<LinkedHashMap<String, Object>>()
+				{
+
+					@Override
+					public int compare(LinkedHashMap<String, Object> arg0, LinkedHashMap<String, Object> arg1) {
+						if (((String)arg0.get("Title")).compareTo(((String)arg1.get("Title"))) > 0)
+							return 1;
+						else if (((String)arg0.get("Title")).compareTo(((String)arg1.get("Title"))) < 0)
+							return -1;
+						else
+							return 0;
+					}
+			
+				});
+
 		for(LinkedHashMap<String, Object> i : movies)
 		{
 			JPanel subPanel = new JPanel();
