@@ -53,6 +53,7 @@ public class AddWindowGUI extends WindowBuilder {
 		menuItems.add(new OptionMenuBar("Search"));
 		menuItems.get(0).add("Search", x -> new SearchMovieGUI(tools));
 		super.getFrame().setJMenuBar(menuBarBuilder(menuItems));
+		super.getFrame().getJMenuBar().getMenu(0).setMnemonic(KeyEvent.VK_S);
 	}
 	
 	public void setPicture(String picture) throws IOException
