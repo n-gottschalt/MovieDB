@@ -91,6 +91,7 @@ public class AddWindowGUI extends WindowBuilder {
 			try {
 				tools.storeData();
 				JOptionPane.showMessageDialog(getFrame(), "Movie added!");
+				tools.getMainWindow().reDraw(tools.getMainWindow().getScroll().getVerticalScrollBar().getValue());
 				tools.clearData(pictureLives);
 			} catch (ClassNotFoundException | SQLException | ParseException | IOException e) {
 				e.printStackTrace();
@@ -114,16 +115,10 @@ public class AddWindowGUI extends WindowBuilder {
 	
 	public void close() 
 	{
-		try {
 			super.getFrame().setVisible(false);
 			super.getFrame().dispose();
-			tools.getMainWindow().clear();
-			tools.getMainWindow().buildWindow();
-		} catch (ClassNotFoundException | IOException | SQLException e) {
-			e.printStackTrace();
-		} 
 	}
-	
+
 	public void clear()
 	{
 		super.getFrame().remove(fullPanel);

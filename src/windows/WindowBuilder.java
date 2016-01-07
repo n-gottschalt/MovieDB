@@ -93,6 +93,7 @@ public class WindowBuilder extends JFrame{
 		return new MenuBar(menuItems).giveMeTheMenuBar();
 	}
 	
+	
 	protected JMenuBar menuBarBuilder()
 	{
 		return new MenuBar().giveMeTheMenuBar();

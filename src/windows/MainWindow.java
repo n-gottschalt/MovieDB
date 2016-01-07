@@ -100,9 +100,26 @@ public class MainWindow extends WindowBuilder{
 		return scroll;
 	}
 	
+	public void reDraw(int setPosition) throws ClassNotFoundException, SQLException
+	{
+		clear();
+		try {
+			buildWindow();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		scroll.getVerticalScrollBar().setValue(setPosition);
+	}
+	
 	public void clear()
 	{
 		getFrame().remove(scroll);
+	}
+	
+	public JScrollPane getScroll()
+	{
+		return scroll;
 	}
 	
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, UnsupportedLookAndFeelException, SQLException, ParseException

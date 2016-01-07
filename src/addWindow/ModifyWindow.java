@@ -64,7 +64,6 @@ public class ModifyWindow extends AddWindowTools {
 				break;
 			}
 		}
-		setClose();
 	}
 	
 	private void verifyChange()
@@ -81,6 +80,7 @@ public class ModifyWindow extends AddWindowTools {
 					Integer.parseInt((String)data.get("MovieID")));
 			JOptionPane.showMessageDialog(tools.getWindowGUI().getFrame(), "Movie modified!");
 			tools.getWindowGUI().close();
+			tools.getMainWindow().reDraw(tools.getMainWindow().getScroll().getVerticalScrollBar().getValue());
 		} catch (ClassNotFoundException | SQLException | ParseException e1) {
 			e1.printStackTrace();
 		}
@@ -92,6 +92,7 @@ public class ModifyWindow extends AddWindowTools {
 			new Database().deleteData(Integer.parseInt((String)data.get("MovieID")));
 			JOptionPane.showMessageDialog(tools.getWindowGUI().getFrame(),
 					(String)data.get("Title") + " has been deleted.");
+			tools.getMainWindow().reDraw(tools.getMainWindow().getScroll().getVerticalScrollBar().getValue());
 			tools.getWindowGUI().close();
 		} catch (NumberFormatException | ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
