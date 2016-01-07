@@ -28,6 +28,7 @@ public class MainWindow extends WindowBuilder{
 		super(screenSize(), "Main Window");
 		buildWindow();
 		this.mainScreen = this;
+		super.setFrameClose(() -> super.close());
 	}
 
 	public static Dimension screenSize()
@@ -138,7 +139,7 @@ public class MainWindow extends WindowBuilder{
 	{
 		return scroll;
 	}
-	
+
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, UnsupportedLookAndFeelException, SQLException, ParseException
 	{
 		new MainWindow();
