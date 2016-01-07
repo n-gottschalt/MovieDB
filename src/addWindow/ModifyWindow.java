@@ -88,15 +88,16 @@ public class ModifyWindow extends AddWindowTools {
 	
 	private void setDelete()
 	{
-		try {
-			new Database().deleteData(Integer.parseInt((String)data.get("MovieID")));
-			JOptionPane.showMessageDialog(tools.getWindowGUI().getFrame(),
-					(String)data.get("Title") + " has been deleted.");
-			tools.getMainWindow().reDraw(tools.getMainWindow().getScroll().getVerticalScrollBar().getValue());
-			tools.getWindowGUI().close();
-		} catch (NumberFormatException | ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		if(JOptionPane.showConfirmDialog(tools.getWindowGUI().getFrame(), "Are you sure?") == 0)
+			try {
+				new Database().deleteData(Integer.parseInt((String)data.get("MovieID")));
+				JOptionPane.showMessageDialog(tools.getWindowGUI().getFrame(),
+						(String)data.get("Title") + " has been deleted.");
+				tools.getMainWindow().reDraw(tools.getMainWindow().getScroll().getVerticalScrollBar().getValue());
+				tools.getWindowGUI().close();
+			} catch (NumberFormatException | ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
 	}
 	
 	private void setClose()
