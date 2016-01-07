@@ -34,6 +34,7 @@ public class WindowBuilder extends JFrame{
 		this.title = "Movie DB";
 		mainFrame = new JFrame(this.title);
 		mainFrame.setSize(this.windowSizeX, this.windowSizeY);
+		mainFrame.setLocationRelativeTo(null);
 		UIManager.setLookAndFeel("com.jtattoo.plaf.mint.MintLookAndFeel");
 		menuBarBuilder();
 	}
@@ -46,6 +47,7 @@ public class WindowBuilder extends JFrame{
 		this.title = title;
 		mainFrame = new JFrame(this.title);
 		mainFrame.setSize(this.windowSizeX, this.windowSizeY);
+		mainFrame.setLocationRelativeTo(null);
 		UIManager.setLookAndFeel("com.jtattoo.plaf.mint.MintLookAndFeel");
 	}
 	
@@ -54,6 +56,7 @@ public class WindowBuilder extends JFrame{
 		this.title = title;
 		mainFrame = new JFrame(this.title);
 		mainFrame.setSize(size);
+		mainFrame.setLocationRelativeTo(null);
 		UIManager.setLookAndFeel("com.jtattoo.plaf.mint.MintLookAndFeel");
 	}
 

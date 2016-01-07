@@ -92,13 +92,30 @@ public class MainWindow extends WindowBuilder{
 			
 			subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.PAGE_AXIS));
 			subPanel.add(super.pictureBuilder((byte[])i.get("Art"), 214, 317));
-			subPanel.add(new JLabel((String)i.get("Title")));
-			
+	
+			subPanel.add(fontSizeChange(i));
 			mainPanel.add(subPanel);
 		}
 		scroll = new JScrollPane(mainPanel);
 		return scroll;
 	}
+	
+	private String textMaxLen(String title)
+	{
+		if(title.length() > 18)
+			return title.substring(0, 18);
+		else
+			return title;
+	}
+	
+	private JLabel fontSizeChange(LinkedHashMap<String, Object> value)
+	{
+		JLabel label = new JLabel();
+		label.setFont(label.getFont().deriveFont((float) 20.0));
+		label.setText(textMaxLen((String)value.get("Title")));	
+		return label;
+	}
+	
 	
 	public void reDraw(int setPosition) throws ClassNotFoundException, SQLException
 	{
