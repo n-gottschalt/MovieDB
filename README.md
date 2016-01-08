@@ -5,6 +5,7 @@ This project was written over the course of 2 months, mostly during my
 WinterBreak between my Junior and Senior year while attending SUNY Albany.
 It is written in Java but also includes usage of new JAR's and techniques 
 including:
+
 	SQLite Database
 	JSON API
 	Lambda Expressions
