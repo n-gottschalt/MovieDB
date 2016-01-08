@@ -21,9 +21,9 @@ public class AddWindowTools {
 	public static String[] labels = {"Title", "Released", "Rating", 
 			"Director", "Genre", "Runtime"};
 	
-	LinkedHashMap<String, Object> data = new LinkedHashMap<String, Object>();
+	public LinkedHashMap<String, Object> data = new LinkedHashMap<String, Object>();
 	
-	AddWindowGUI screen;
+	public AddWindowGUI screen;
 	
 	public AddWindowTools(MainWindow main)
 	{
