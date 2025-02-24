@@ -13,9 +13,7 @@ including:
 	Storyboard
 	Design Docs
 	HashMaps
-The best way to learn is by doing! Also I wanted to take a second to 
-dedicate this project to my beautiful, smart, funny wife Becky, who 
-supported me through this whole project. Now on to the instructions and 
+The best way to learn is by doing! Now on to the instructions and 
 overview.
 
 This program is a simple Movie database that takes advantage of the IMDB 
